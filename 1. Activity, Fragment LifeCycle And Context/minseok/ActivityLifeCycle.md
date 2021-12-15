@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 오케이 여기까진 이해됐다.
 근데 왜 MainActivity 생성자에서 context 참조가 안되는걸까?
 
-위 코드에서 super.onCreate 코드를 타고 들어가보면 AppCompatActivity가 아닌,
+답은 위 코드에서 super.onCreate 코드를 타고 들어가보면 AppCompatActivity가 아닌,
 왠 이상한 FragmentActivity 클래스가 나온다. 이는 AppCompatActivity에는 onCreate() 구현체가 없으며,
 AppCompatActivity 클래스에서 FragmentActivity를 상속받아 onCreate()를 구현하였기 때문이다.
 
@@ -82,7 +82,9 @@ AppCompatActivity 클래스에서 FragmentActivity를 상속받아 onCreate()를
 
 ![onCreate](preview/ComponentActivityOnCreate.PNG)
 
-`mContextAwareHelper.dispatchOnContextAvailable()` 해당 코드에서 액티비티의 Context가 유효한 상태인지를 통지가 온뒤, AppCompatActivity의 initDelegate() 함수안에 있는 유효한 context 통지 콜백을 받은 후에 onCreate()를 실행한다.
+`mContextAwareHelper.dispatchOnContextAvailable()` 함수를 호출하여 액티비티의 Context가 유효한 상태인지를 통지한다.
+
+최종적으로 AppCompatActivity의 initDelegate() 함수안에 있는 OnContextAvailableListener의 onContextAvailable()에서 context 접근 가능을 통지받은 후에 생명주기 상태를 초기화하고 onCreate()를 호출한다.
 
 ![context](preview/AppCompatAvailableContext.PNG)
 

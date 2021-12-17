@@ -105,6 +105,8 @@ Fragment 의 onDetach() 호출
 지금까지 Activity 와 Fragment 의 기본적인 생명주기에 관해서 알아보았습니다.
 그렇다면 Activity 나 Fragment의 재시작, Fragment 의 교체, Fragment 의 재시작 시에는 어떤 순서로 동작 되는지에 대해서도 알아보겠습니다.
 
+---
+
 ### Fragment 위에 Fragment  를 add  하는 경우
 
 ![ex1](./picture/ex1.png)
@@ -138,9 +140,12 @@ Fragment 의 onDetach() 호출
 메모리 부족으로 인해 앱이 강제종료 되는 부분은 시스템이 알아서 결정을 하는데, 개발자는 앱을 만들때 앱의 라이프사이클 처리에 신경을 써서 앱을 종료하거나 다시 실행할때 그 동작이 제대로 이루어지도록 설계해서 메모리 누수가 없도록 앱을 설계해야 합니다.
 시스템의 메모리 누수가 일어나는 원인은 다양한데
 
-- viewModel 에서 Activity 의 context 나 Activity 의 view 를 참조하는 것으로 메모리 누수가 일어날 수 있음 -> 뷰모델이 특정 액티비티 인스턴스보다 더 오랜 수명을 가질 수 있기 때문에 메모리 누수가 일어날 수 있음
-- viewBinding 사용 시 Fragment  에서 메모리 누수 -> Fragment 의 onDestroyView() 에서 null 처리를 해주지 않으면 fragment 내의 view의 생명주기가 fragment 보다 더 오래 유지 되기 때문에 메모리 누수가 생길 수 있음
-- 서비스가 필요하지 않을 시에도 실행되도록 놔두는 것으로 메모리 부족이 일어날 수 있음 -> 강제 종료에 대비해서 onStartCommand 또는 onBind 에서 강제 종료 후에 해야하는 동작을 설정하는 것으로 메모리 누수에 대비할 수 있음
+- viewModel 에서 Activity 의 context 나 Activity 의 view 를 참조하는 것으로 메모리 누수가 일어날 수 있음 
+- -> 뷰모델이 특정 액티비티 인스턴스보다 더 오랜 수명을 가질 수 있기 때문에 메모리 누수가 일어날 수 있음
+- viewBinding 사용 시 Fragment  에서 메모리 누수 
+- -> Fragment 의 onDestroyView() 에서 null 처리를 해주지 않으면 fragment 내의 view의 생명주기가 fragment 보다 더 오래 유지 되기 때문에 메모리 누수가 생길 수 있음
+- 서비스가 필요하지 않을 시에도 실행되도록 놔두는 것으로 메모리 부족이 일어날 수 있음 
+- -> 강제 종료에 대비해서 onStartCommand 또는 onBind 에서 강제 종료 후에 해야하는 동작을 설정하는 것으로 메모리 누수에 대비할 수 있음
 
 등이 있습니다.
 그렇다면 메모리 누수란 정확이 어떤 것인지 알아봅시다.
@@ -188,18 +193,20 @@ Fragment 의 onDetach() 호출
 등에 Context 가 사용된다. 그러면 Context 를 어떻게 가져올 수 있을까?
 
 ### Context 를 얻는 3가지 방법
-1) View
+1) **View**
 - View 클래스에서 제공하는 getContext() 는 뷰에 있는 Activity 의 Context 를 가져다줍니다. Application Context 가 아닌 Activity Context 이기 때문에 특정 Activity 의 UI 변화와 관련되어 있음. Activity  Context 는 View  를 관리하는데 쓰이며 layout 을 inflate 하고 dialog 를 보여주는 단기적 작업에 사용됨
-2) Activity
+
+2) **Activity**
 - Activity 는 Context 를 상속받은 하위 클래스로, getApplicationContext() 메서드로 Application Context 를 가져올 수 있음
 - Application Context 는 백그라운드 작업, 데이터 액세스 와 같이 Activity 의 LifeCycle 에 국한되지 않고 유지되어야 하는 작업을 할 때 사용됨
-3) ContentWrapper
+
+3) **ContentWrapper**
 - getBaseContext() 라는 메소드가 있지만 잘 사용되지 않음
 
 ## Context 와 메모리 누수
 Context 를 이용함에 있어서도 메모리 누수가 발생할 수 있는데, 그 원인과 대처 방안은 다음과 같다.
 
-1) Static 변수
+1) **Static 변수**
 ```
 var test : View? = null
 
@@ -220,19 +227,19 @@ override onDestroy(){
 ```
 - onDestroy() 내에서 수동으로 변수를 null 로 만들어주면 메모리가 해제 됨
 
-2) Singleton
+2) **Singleton**
 - Singleton  을 사용할 때 Activity Context 를 참조한다면 비슷한 문제가 발생하는데, 대신 Application Context 를 사용하면 된다.
 - MVC, MVP, MVVM 등 적절한 아키텍쳐로 View  와 분리를 하여 Activtiy Context 에 대한 접근이 필요없게 만들면 이러한 문제를 해결 할 수 있음
 
-3) Inner Class
+3) **Inner Class**
 - Activity 안에 만들어진 내부클래스는 상위 Activity  의 Activity Context 를 참조함
 - Singleton 과 비슷한 맥락으로 내부 클래스를 Object 로 만든다면 문제가 발생하지 않음
 
-4) Background
+4) **Background**
 - 비동기 작업은 Activity 가 종료된 뒤, 백그라운드에서 계속 실행되므로 Activity 에 접근 할 수 있음.
 - AsyncTask 와 같이 Activity 내부에서 생성되는 코드는 내부 클래스를 만드는것과 같은 문제가 발생할 수 있지만 별도 클래스에 넣어서 해결할 수 있고, Thread 를 사용함에 있어서 발생할 수 있는 비슷한 문제는 Activity 가 onDestory() 될 때 Thread 를 중단하면 문제가 해결된다. 또한 비동기 처리를 할때는 Coroutine 을 사용하면 문제가 해결된다.
 
-5) 이벤트 핸들링
+5) **이벤트 핸들링**
 - 시스템 서비스의 이벤트를 처리하기 위해 Activity 에 리스너가 등록된 경우 Activity 가 종료될 때 등록을 취소하면 문제가 해결됨
 - 이번에 보안작업을 하면서 USB 가 연결되면 로그를 찍는 broadcastReceiver 를 등록하는 작업이 있었는데, 이때도 Activity 가 종료될때, 리스너를 해제해주어 메모리 누수를 막았음
 
@@ -241,14 +248,14 @@ override onDestroy(){
 
 ---
 ### 참조문헌 References
-https://jinee0717.tistory.com/44
-https://hik-coding.tistory.com/72?category
-https://readystory.tistory.com/199
-https://woovictory.github.io/2019/05/02/What-is-ViewModel/
-http://wanochoi.com/?p=1990
-https://developer.android.com/topic/performance/memory?hl=ko
-https://developer.android.com/topic/performance/memory-overview?hl=ko
-https://mparchive.tistory.com/190
-https://velog.io/@hanna2100/%EB%B2%88%EC%97%AD-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%9D%98-Context%EC%99%80-%EB%A9%94%EB%AA%A8%EB%A6%AC%EB%88%84%EC%88%98
-https://medium.com/swlh/context-and-memory-leaks-in-android-82a39ed33002
-https://charlezz.medium.com/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%9D%98-context%EB%A5%BC-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B3%A0-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EB%88%84%EC%88%98%EB%A5%BC-%EB%B0%A9%EC%A7%80%ED%95%98%EA%B8%B0-b092a09ef4ef
+- https://jinee0717.tistory.com/44
+- https://hik-coding.tistory.com/72?category
+- https://readystory.tistory.com/199
+- https://woovictory.github.io/2019/05/02/What-is-ViewModel/
+- http://wanochoi.com/?p=1990
+- https://developer.android.com/topic/performance/memory?hl=ko
+- https://developer.android.com/topic/performance/memory-overview?hl=ko
+- https://mparchive.tistory.com/190
+- https://velog.io/@hanna2100/%EB%B2%88%EC%97%AD-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%9D%98-Context%EC%99%80-%EB%A9%94%EB%AA%A8%EB%A6%AC%EB%88%84%EC%88%98
+- https://medium.com/swlh/context-and-memory-leaks-in-android-82a39ed33002
+- https://charlezz.medium.com/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%9D%98-context%EB%A5%BC-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B3%A0-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EB%88%84%EC%88%98%EB%A5%BC-%EB%B0%A9%EC%A7%80%ED%95%98%EA%B8%B0-b092a09ef4ef

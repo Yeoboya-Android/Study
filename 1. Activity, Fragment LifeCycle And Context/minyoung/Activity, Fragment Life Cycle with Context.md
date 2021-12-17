@@ -107,25 +107,31 @@ Fragment 의 onDetach() 호출
 
 ### Fragment 위에 Fragment  를 add  하는 경우
 
-![ex1](./picture/Ex1.PNG)
+![ex1](./picture/ex1.png)
 
 - 첫번째 Fragment 의 onAttach() ~  onResume() 까지 실행되고 두번째 Fragment 의 onAttach() ~ onResume() 까지 실행됨. 이때 아래에 있는 FirstFragment 의 Life Cycle 은 여전히 실행되고 있는 상태입니다.
 
 ### 새로운 Fragment 를 replace  하는 경우
-![Ex2](./picture/Ex 2.PNG)
+
+![ex2](./picture/ex2.png)
+
 - 첫번째 Fragment 의 onAttach() ~ onResume() 까지 호출된 다음 replace 동작이 호출됨
 - 첫번째 Fragment 의 onStop() 까지 호출된 다음 두번째 Fragment 의 onAttach() 부터 onStart() 까지 호출됨
 - 첫번째 Fragment 의 onDestroyView() ~ onDetach() 까지 호출되고 두번째 Fragment 의 onResume() 이 호출됨
 
 ###  Fragment 를 replace 하면서 addToBackStack() 하는 경우
-![Ex3](./picture/Ex 3.PNG)
+
+![ex3](./picture/ex3.png)
+
 - 첫번째 Fragment 의 onAttach() ~ onResume() 까지 호출된 다음 replace 동작이 호출됨
 - 첫번째 Fragement 의 onStop() 까지 호출된 다음 두번째 Fragment 의 onAttach() 부터 onStart() 까지 호출됨
 - 첫번째 Fragment 의 DestoryView() 만 호출된 다음 두번째 Fragment 의 onResume() 이 호출됨
 - 그냥 replace 하는 것과 달리 backstack 에 첫번째 fragment 를 남기기 때문에 onDestroyView() 까지만 호출됨을 알 수 있습니다.
 
 ### Home 버튼을 통해 화면을 나간 경우
-![Ex4](./picture/Ex 4.PNG)
+
+![ex4](./picture/ex4.png)
+
 - onAttach() 부터 onResume() 까지 호출된 다음 Home 버튼을 누르면 onPause() ~ onSaveInstanceState() 까지 호출되면서 그 뒤는 호출되지 않음
 - 하지만 onStop() 에 있는 동안 메모리 부족 등에 경우 시스템에 의해 Destroy 될 수 있습니다.
 

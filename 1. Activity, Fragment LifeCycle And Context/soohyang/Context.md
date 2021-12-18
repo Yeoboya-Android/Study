@@ -84,6 +84,7 @@ xml 바인딩 식에서 context를 직접 사용해도 문제가 없으며, 심�
 참고 : 
 
 깡샘의 안드로이드 프로그래밍
+
 Head First Android Development
 
 [https://arabiannight.tistory.com/284](https://arabiannight.tistory.com/284)

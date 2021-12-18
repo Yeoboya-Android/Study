@@ -28,19 +28,19 @@ Context는 어플리케이션과 관련된 정보에 접근하고자 하거나 �
 ```csharp
 //c#의 application의 경우
 //Get an Application Name.
- String applicationName = **System**.AppDomain.CurrentDomain.FriendlyName;
+ String applicationName = System.AppDomain.CurrentDomain.FriendlyName;
 
  //Start a new process(application)
- **System**.Diagnostics.Process.Start("test.exe");
+ System.Diagnostics.Process.Start("test.exe");
 ```
 
 ```java
 //안드로이드의 경우
 //Get an application name
-String applicationName = **this**.getPackageName();
+String applicationName = this.getPackageName();
 
 //Start a new activity(application)
-**this**.startActivity(new Intent(this, Test.class));
+this.startActivity(new Intent(this, Test.class));
 ```
 
 ## Application Context와 Activity Context

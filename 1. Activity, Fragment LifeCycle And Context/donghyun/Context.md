@@ -43,7 +43,6 @@ Application을 확장한 MyApplication과 여러 Activity 클래스들이 있다
 
 단, Toast는 applicationContext를 이용해서 가능하다. GUI 작업중 유일하게 가능한 작업입니다.
 
- 
 
 정리하면,,,
 

@@ -1,3 +1,11 @@
+---
+topic: Activity, Fragment LifeCycle And Context
+description: Context
+author: 김아름
+---
+
+<br>
+
 # Context
 - 애플리케이션 환경에 대한 글로벌 정보를 갖는 인터페이스
 →  애플리케이션 환경에 대한 글로벌 정보 ?
@@ -7,8 +15,12 @@
 - 리소스, 데이터베이스, shared preference 등에 접근하기 위해 사용할 수 있다.
 - 액티비티와 애플리케이션 클래스는 Context 클래스를 확장한 클래스이다.
 
+<br>
+
 # Context가 사용되는 곳
 - 일반적으로 뷰(Toast, Adapter, Inflaters), 액티비티 실행(Intents), 시스템 서비스 접근(SharedPreferences, ContentProviders)등에 사용
+
+<br>
 
 # Context는 크게 두 종류로 나뉜다!
 1. Application Context
@@ -25,6 +37,8 @@
 - 액티비티 라이프사이클과 연결되어 있다.
 - 액티비티와 함께 소멸해야 하는 경우에 사용한다.
 
+<br>
+
 # 언제, 어떤 Context를 사용해야 할까?
 1. Application Context
 - 애플리케이션 내에 싱글톤 객체를 만드려고 하는데 이 객체가 Context를 필요로 할 때, Application Context를 사용하면 된다. 만약 Activity Context를 넘겨주게 되면 액티비티에 대한 참조를 메모리에 남겨두며 GC(Garbage Collected)가 진행되지 않아 메모리 누수가 발생할 것이다.
@@ -38,10 +52,14 @@
 # Context UseCase
 ![ex_screenshot](./images/context_usecase.png)
 
+<br>
+
 ## getContext() vs requireContext()
 - getContext()는 Context가 호스트에 붙어있지 않을 때 null을 반환한다
 - requireContext()는 getContext()에서 반환된 context가 null인 경우 IllegalStateException이 발생한다.
 - Fragment가 Activity에 attach 되지 않은 경우 등의 예외가 발생할 수 있으므로 Fragment.getContext()가 항상 NonNull인 것은 아니다. 따라서 requireContext()를 통해 Context가 Null이 아님을 보장할 수 있다.
+
+<br>
 
 ## 참조문헌 References
 developer.android.com/reference/android/content/Context

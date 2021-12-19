@@ -114,3 +114,8 @@ class BlankFragment : Fragment() {
 
 - 2번의 경우 addToBackStack을 안한 경우이며, replace 되었을때 onDetach() 까지 호출되어 소멸한다.
 - 3번은 addToBackStack을 했을 경우다. 프래그먼트가 replace 되더라도 백스택에 쌓여있기 때문에 onDestroyView() 까지만 호출이 된다.
+
+# 참조문헌 References
+
+- [준비된 개발자](https://readystory.tistory.com/199)
+- [pluu](https://pluu.github.io/blog/android/2020/01/25/android-fragment-lifecycle/)

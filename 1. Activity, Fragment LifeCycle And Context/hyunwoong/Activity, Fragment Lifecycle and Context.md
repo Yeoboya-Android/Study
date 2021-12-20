@@ -172,4 +172,5 @@ Context는 크게 Application Context, Activity Context로 나뉜다.
 -   Application Context는 Activity Context가 제공하는 기능 전체를 제공하지 않는다. 특히 GUI와 관련된 Context 조작은 실패할 확률이 높다.
 -   Application Context가 사용자 호출로 생성된, clean up 되지 않은 객체를 가지고 있다면 메모리 누수가 발생할 수 있다. Activity 객체는 가비지 콜렉션이 가능하지만 Application 오브젝트는 프로세스가 살아있는 동안 남아있다.
 
+테스트 커밋용
 

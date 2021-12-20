@@ -4,7 +4,6 @@
 # Activity가 새로운 Activity를 생성시 LifeCycle과정
     - Main::OnPause -> Sub::OnCreate -> Sub::OnStart -> Sub::OnResume -> Main::OnStop
     - SubActivity가 완전히 생성된 다음에 Main Activity는 OnStop이벤트가 호출된다.
-      즉 SubActivity(상위)가 완전히 보여준 후에 MainActivity(하위) 액티비티가 멈추게 된다.
     
 # 최상위 Activity 제거시 LifeCycle과정
     - Sub::OnPause -> Main::OnRestart -> Main::OnStart -> Main::OnResume -> Sub::OnStop -> Sub::OnDestroy

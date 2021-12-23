@@ -26,6 +26,7 @@ import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
 import io.agora.rtc.video.VideoEncoderConfiguration
 import java.util.concurrent.CountDownLatch
+import kotlin.math.abs
 
 class LiveActivity : RtcBasedActivity(), RtcEngineEventHandler, SensorEventListener {
 
@@ -144,7 +145,7 @@ class LiveActivity : RtcBasedActivity(), RtcEngineEventHandler, SensorEventListe
         )
         rtcEngine()!!.setClientRole(Constants.CLIENT_ROLE_BROADCASTER)
         rtcEngine()!!.enableLocalAudio(false)
-        rtcEngine()!!.joinChannel(null, AgoraConfig.CHANNEL_NAME, null, 0)
+        rtcEngine()!!.joinChannel(AgoraConfig.TOKEN, AgoraConfig.CHANNEL_NAME, null, 0)
     }
 
     override fun onStart() {
@@ -170,7 +171,6 @@ class LiveActivity : RtcBasedActivity(), RtcEngineEventHandler, SensorEventListe
         mVideoManager!!.stopCapture()
         mVideoManager!!.setCameraStateListener(null)
         mFURenderer!!.setOnTrackStatusChangedListener(null)
-        mFURenderer = null
         rtcEngine()!!.leaveChannel()
         super.finish()
     }
@@ -236,11 +236,11 @@ class LiveActivity : RtcBasedActivity(), RtcEngineEventHandler, SensorEventListe
             val x = event.values[0]
             val y = event.values[1]
             val z = event.values[2]
-            if (Math.abs(x) > 3 || Math.abs(y) > 3) {
-                if (Math.abs(x) > Math.abs(y)) {
-                    mFURenderer!!.onDeviceOrientationChanged(if (x > 0) 0 else 180)
+            if (abs(x) > 3 || abs(y) > 3) {
+                if (abs(x) > abs(y)) {
+                    mFURenderer?.onDeviceOrientationChanged(if (x > 0) 0 else 180)
                 } else {
-                    mFURenderer!!.onDeviceOrientationChanged(if (y > 0) 90 else 270)
+                    mFURenderer?.onDeviceOrientationChanged(if (y > 0) 90 else 270)
                 }
             }
         }

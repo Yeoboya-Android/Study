@@ -1,4 +1,4 @@
-include ':domain'
 include ':data'
+include ':domain'
 include ':app'
 rootProject.name = "lifecycle"

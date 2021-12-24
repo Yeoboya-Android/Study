@@ -1,21 +1,25 @@
-package github.sun5066.data.source
+package github.sun5066.repository
 
 import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
-import github.sun5066.data.source.model.ImageData
+import github.sun5066.repository.model.ImageData
 
-object ImageSourceService  {
+class ImageDataRepository(private val context: Context) {
 
-    private const val ID = MediaStore.Images.Media._ID
-    private const val DISPLAY_NAME = MediaStore.Images.Media.DISPLAY_NAME
+    companion object {
+        private val CONTENT_URI = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        private const val ID = MediaStore.Images.ImageColumns._ID
+        private const val DISPLAY_NAME = MediaStore.Images.ImageColumns.DISPLAY_NAME
+        private const val DATE_TOKEN = MediaStore.Images.ImageColumns.DATE_TAKEN
+    }
 
-    fun selectAll(context: Context): List<ImageData> {
-        val projection = arrayOf(ID, DISPLAY_NAME)
+    fun selectAll(): List<ImageData> {
+        val projection = arrayOf(ID, DISPLAY_NAME, DATE_TOKEN)
         val imageList = ArrayList<ImageData>()
 
         context.contentResolver.query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null, null, null
+            CONTENT_URI, projection, null, null, "$DATE_TOKEN DESC"
         )?.use { cursor ->
             val idColumn = cursor.getColumnIndexOrThrow(ID)
             val displayNameColumn = cursor.getColumnIndexOrThrow(DISPLAY_NAME)
@@ -24,7 +28,7 @@ object ImageSourceService  {
                 val id = cursor.getLong(idColumn)
                 val displayName = cursor.getString(displayNameColumn)
                 val contentUri = Uri.withAppendedPath(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id.toString()
+                    CONTENT_URI, id.toString()
                 )
 
                 imageList.add(
@@ -32,7 +36,6 @@ object ImageSourceService  {
                 )
             }
         }
-
         return imageList
     }
 }

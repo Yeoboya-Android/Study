@@ -1,4 +1,4 @@
-package github.sun5066.data.source.model
+package github.sun5066.data.model
 
 import android.net.Uri
 import android.os.Parcelable

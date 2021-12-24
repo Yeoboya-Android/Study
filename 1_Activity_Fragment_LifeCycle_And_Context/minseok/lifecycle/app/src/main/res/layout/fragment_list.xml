@@ -5,13 +5,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.ListFragment">
+        tools:context=".ui.fragment.ListFragment">
 
-        <TextView
-            android:id="@+id/txtView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            tools:listitem="@layout/item_image_list"
+            tools:itemCount="20"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:spanCount="2"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -55,14 +55,19 @@ class LiveActivity : RtcBasedActivity(), RtcEngineEventHandler, SensorEventListe
         when (it.id) {
             R.id.btn_rotate -> {
                 Log.d("soohyangA", "btn_rotate")
-                mOrientation = "portrait"
-                val convertedOrientation = when (mOrientation) {
-                    "landscape" -> ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-                    "portrait" -> ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
-                    "adaptive" -> ActivityInfo.SCREEN_ORIENTATION_SENSOR
-                    else -> ActivityInfo.SCREEN_ORIENTATION_SENSOR
+
+                // 테스트를 위해 강제 지정
+                if(mOrientation != "portrait") {
+                    mOrientation = "portrait"
+                    val convertedOrientation = when (mOrientation) {
+                        "landscape" -> ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+                        "portrait" -> ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
+                        "adaptive" -> ActivityInfo.SCREEN_ORIENTATION_SENSOR
+                        else -> ActivityInfo.SCREEN_ORIENTATION_SENSOR
+                    }
+                    requestedOrientation = convertedOrientation
                 }
-                requestedOrientation = convertedOrientation
+
             }
         }
     }
@@ -105,6 +110,9 @@ class LiveActivity : RtcBasedActivity(), RtcEngineEventHandler, SensorEventListe
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
+
+        // 방송 청취중에 화면이 회전되면 view가 제거되기 때문에 saveInstanceState가 있는 경우 다시 그려준다.
+        // saveInstanceState하는 다른 경우 확인 필요
         if(mRemoteUid != -1) {
             runOnUiThread {
                 removeRemoteView()
@@ -174,14 +182,6 @@ class LiveActivity : RtcBasedActivity(), RtcEngineEventHandler, SensorEventListe
             setLocalPreviewMirror(Constant.MIRROR_MODE_AUTO)
             setLocalPreview(mBinding.localVideoView)
         }
-        // create screenshot to compare effect before and after using API
-        /**
-         * [io.agora.framework.PreprocessorFaceUnity.onPreProcessFrame]
-         */
-//        findViewById(R.id.btn_switch_camera).setOnLongClickListener { view ->
-//            PreprocessorFaceUnity.needCapture = true
-//            true
-//        }
     }
 
     private fun joinChannel(isBroadcaster: Boolean, orientation: String) {
@@ -272,12 +272,6 @@ class LiveActivity : RtcBasedActivity(), RtcEngineEventHandler, SensorEventListe
 
     override fun onJoinChannelSuccess(channel: String?, uid: Int, elapsed: Int) {
         Log.d("soohyangA", "onJoinChannelSuccess $uid $mRemoteUid")
-
-
-//        Log.i(
-//            "soohyangA",
-//            "onJoinChannelSuccess " + channel + " " + (uid and 0xFFFFFFFFL)
-//        )
     }
 
     override fun onUserOffline(uid: Int, reason: Int) {

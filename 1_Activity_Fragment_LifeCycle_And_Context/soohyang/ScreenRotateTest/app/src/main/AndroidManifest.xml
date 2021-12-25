@@ -26,16 +26,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ScreenRotateTest" >
         <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait">
+            android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".LiveActivity"
-            android:configChanges="orientation"/>
-
+            android:configChanges="orientation"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

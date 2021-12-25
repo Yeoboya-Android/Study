@@ -36,7 +36,7 @@ class ScreenRotateApplication : Application() {
         try {
             mRtcEngine = RtcEngine.create(this, appId, mRtcEventHandler)
             mRtcEngine?.enableVideo()
-            mRtcEngine?.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING)
+            mRtcEngine?.setChannelProfile(Constants.CHANNEL_PROFILE_GAME)
         } catch (e: Exception) {
             throw RuntimeException(
                 """

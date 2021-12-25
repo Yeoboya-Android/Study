@@ -24,11 +24,18 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn_broadcaster"
+                android:id="@+id/btn_broadcaster_lan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 clickListener="@{clickListener}"
-                android:text="방송자 입장"/>
+                android:text="방송자 입장 가로"/>
+
+            <Button
+                android:id="@+id/btn_broadcaster_pot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                clickListener="@{clickListener}"
+                android:text="방송자 입장 세로"/>
 
             <Button
                 android:id="@+id/btn_audience"

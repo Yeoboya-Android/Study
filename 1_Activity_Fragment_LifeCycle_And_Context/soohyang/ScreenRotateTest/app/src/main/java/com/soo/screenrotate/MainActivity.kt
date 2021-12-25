@@ -2,6 +2,7 @@ package com.soo.screenrotate
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -16,6 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+
 
     private val mViewModel: MainViewModel by viewModels()
     lateinit var mBinding: ActivityMainBinding
@@ -39,16 +42,23 @@ class MainActivity : AppCompatActivity() {
 
     private val onClickListener = View.OnClickListener {
         when(it.id) {
-            R.id.btn_broadcaster -> checkPermission()
-            R.id.btn_audience -> checkPermission()
+            R.id.btn_broadcaster_lan -> checkPermission {
+                enterRoom(true, "landscape")
+            }
+            R.id.btn_broadcaster_pot -> checkPermission {
+                enterRoom(true, "portrait")
+            }
+            R.id.btn_audience -> checkPermission {
+                enterRoom(false, "landscape")
+            }
         }
     }
 
-    private fun checkPermission() {
+    private fun checkPermission(granted:()->Unit) {
         TedPermission.with(applicationContext)
             .setPermissionListener(object : PermissionListener {
                 override fun onPermissionGranted() {
-                    enterRoom()
+                    granted()
                 }
 
                 override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
@@ -60,8 +70,12 @@ class MainActivity : AppCompatActivity() {
             .check()
     }
 
-    private fun enterRoom() {
-        startActivity(Intent(this, LiveActivity::class.java))
+    private fun enterRoom(isBroadcaster: Boolean, orientation: String) {
+        val liveIntent = Intent(this, LiveActivity::class.java).apply {
+            putExtra(LiveActivity.KEY_IS_BROADCASTER, isBroadcaster)
+            putExtra(LiveActivity.KEY_ORIENTATION, orientation)
+        }
+        startActivity(liveIntent)
     }
 
 

@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty
 
 class AutoClearedValue<T>(val fragment: Fragment) : ReadWriteProperty<Fragment, T> {
 
-    private var binding: T? = null
+    private var _value: T? = null
 
     init {
         fragment.lifecycle.addObserver(object : DefaultLifecycleObserver {
@@ -16,7 +16,7 @@ class AutoClearedValue<T>(val fragment: Fragment) : ReadWriteProperty<Fragment, 
                 fragment.viewLifecycleOwnerLiveData.observe(fragment) { viewLifecycleOwner ->
                     viewLifecycleOwner?.lifecycle?.addObserver(object : DefaultLifecycleObserver {
                         override fun onDestroy(owner: LifecycleOwner) {
-                            binding = null
+                            _value = null
                         }
                     })
                 }
@@ -25,10 +25,10 @@ class AutoClearedValue<T>(val fragment: Fragment) : ReadWriteProperty<Fragment, 
     }
 
     override fun getValue(thisRef: Fragment, property: KProperty<*>) =
-        binding ?: throw IllegalStateException("should never call auto-cleared-value get when it might not be available")
+        _value ?: throw IllegalStateException("should never call auto-cleared-value get when it might not be available")
 
     override fun setValue(thisRef: Fragment, property: KProperty<*>, value: T) {
-        binding = value
+        _value = value
     }
 }
 

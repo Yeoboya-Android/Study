@@ -35,6 +35,8 @@
         <activity android:name=".LiveActivity"
             android:configChanges="orientation"
             android:launchMode="singleTask"/>
+        <activity android:name=".RotateTestActivity"
+            android:configChanges="orientation"/>
     </application>
 
 </manifest>

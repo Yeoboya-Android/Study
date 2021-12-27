@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.app.lifecycletest.databinding.FragmentSecondBinding
 
 class SecondFragment : Fragment() {
@@ -17,8 +18,7 @@ class SecondFragment : Fragment() {
 
     lateinit var mBinding: FragmentSecondBinding
     private val viewModelActivity: MainViewModel by activityViewModels() // Activity에 선언해 준 동일한 ViewModel 클래스에 by activityViewModels() delegation을 추가
-    private val viewmodel: MainViewModel by viewModels()
-    private val fragmentViewModel: FragmentViewModel by activityViewModels()
+    private val viewmodel : MainViewModel by viewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -37,7 +37,7 @@ class SecondFragment : Fragment() {
         mBinding.apply {
             lifecycleOwner = viewLifecycleOwner
             activityViewModel = viewModelActivity
-            viewModel = fragmentViewModel
+            viewModel = viewmodel
         }
 
         return mBinding.root
@@ -49,7 +49,7 @@ class SecondFragment : Fragment() {
         Log.e(TAG, "onViewCreated")
 
         mBinding.button.setOnClickListener {
-            fragmentViewModel.add()
+            viewmodel.add()
         }
     }
 

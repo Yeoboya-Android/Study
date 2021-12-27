@@ -39,7 +39,7 @@ class FirstFragment : Fragment() {
         mBinding.apply {
             lifecycleOwner = viewLifecycleOwner
             activityViewModel = viewModelActivity
-            viewModel = fragmentViewModel
+            viewModel = viewmodel
         }
 
         return mBinding.root
@@ -50,7 +50,7 @@ class FirstFragment : Fragment() {
         Log.e(TAG, "onViewCreated")
 
         mBinding.button.setOnClickListener {
-            fragmentViewModel.add()
+            viewmodel.add()
         }
     }
 

@@ -40,8 +40,7 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
                 LifeCycleModeState.Dialog -> {
                     DetailDialog().apply {
                         arguments = bundleOf(Pair("imageData", imageData))
-                        show(childFragmentManager, "DetailDialog")
-                    }
+                    }.show(childFragmentManager, "DetailDialog")
                 }
                 LifeCycleModeState.NewActivity -> {
                     startActivity(

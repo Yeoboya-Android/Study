@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.IdRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.FragmentManager
 import github.sun5066.data.model.ImageData
 import github.sun5066.lifecycle.R
 import github.sun5066.lifecycle.databinding.ActivityMainBinding
-import github.sun5066.lifecycle.ui.dialog.DetailDialog
 import github.sun5066.lifecycle.ui.fragment.DetailFragment
 import github.sun5066.lifecycle.ui.fragment.ListFragment
 import github.sun5066.lifecycle.ui.state.LastViewState
@@ -30,7 +28,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun onResultPermission(granted: Boolean) {
         if (granted)
-            showView()
+            showListFragment()
         else
             finish()
     }
@@ -38,6 +36,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
+
+        mainViewModel.lifeCycleState.observe(this) { state ->
+            if (state is LifeCycleModeState.Default || state is LifeCycleModeState.BackStack) {
+                showListFragment()
+            }
+        }
+    }
+
+    private fun showListFragment() {
+        val isBackStack = mainViewModel.lifeCycleState.value is LifeCycleModeState.BackStack
+        if (mainViewModel.lastViewState.value is LastViewState.ListFragment) {
+            findOrCreateFragment(ListFragment::class.java, null, R.id.container, isBackStack)
+        }
     }
 
     override fun initPermission() {
@@ -51,61 +62,50 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 R.id.radio2 -> LifeCycleModeState.BackStack
                 R.id.radio3 -> LifeCycleModeState.Dialog
                 R.id.radio4 -> LifeCycleModeState.NewActivity
-                else -> throw NullPointerException("상태가 Null 입니다!")
+                else -> throw IllegalStateException("상태가 없습니다.")
             }
         )
 
-    fun showDetailFragment(imageData: ImageData) {
-        val bundle = bundleOf(Pair("imageData", imageData))
-
-        findOrCreateFragment(DetailFragment::class.java, bundle, R.id.container)
+    fun showDetailFragment(imageData: ImageData) = supportFragmentManager.apply {
+        val args = bundleOf(Pair("imageData", imageData))
+        val isBackStack = mainViewModel.lifeCycleState.value is LifeCycleModeState.BackStack
+        findOrCreateFragment(DetailFragment::class.java, args, R.id.container, isBackStack)
     }
 
-    // todo 여기 부분 수정해야됨
-    private fun <T : Fragment> findOrCreateFragment(
-        type: Class<T>,
-        args: Bundle? = null,
-        @IdRes id: Int
-    ) = when (val currentFragment = supportFragmentManager.findFragmentById(id)) {
-            type.javaClass -> currentFragment as T
-            else -> {
-                val instance: T = type.newInstance()
-                args?.let { instance.arguments = it }
+    private fun <T : Fragment> findOrCreateFragment(type: Class<T>, args: Bundle? = null, frameResId: Int = R.id.content, addBackStack: Boolean = true): T? {
+        val currentFragment = supportFragmentManager.findFragmentById(frameResId)
 
-                supportFragmentManager.beginTransaction()
-                    .addOrReplace(id, instance, currentFragment == null).apply {
-                        if (mainViewModel.lifeCycleState.value is LifeCycleModeState.BackStack)
-                         addToBackStack(null)
-                    }.commitAllowingStateLoss()
+        return when {
+            isFinishing -> null
+            currentFragment == null -> {
+                val instance: T = type.newInstance()
+                args?.let{ instance.arguments = it }
+
+                ActivityUtil.addFragmentToActivity(supportFragmentManager, instance, frameResId, addBackStack)
                 instance
             }
-        }
+            currentFragment.javaClass == type -> currentFragment as T
+            else -> {
+                val instance: T = type.newInstance()
+                args?.let{ instance.arguments = it }
 
-    private fun showView(state: LastViewState? = mainViewModel.lastViewState.value) {
-        when (state) {
-            is LastViewState.DetailDialog -> {
-                DetailDialog().apply {
-                    arguments = bundleOf(Pair("imageData", state.imageData))
-                    show(supportFragmentManager, "DetailDialog")
-                }
+                ActivityUtil.replaceFragmentToActivity(supportFragmentManager, instance, frameResId, addBackStack)
+                instance
             }
-            is LastViewState.DetailFragment -> {
-                findOrCreateFragment(
-                    DetailFragment::class.java, bundleOf(Pair("imageData", state.imageData)), R.id.container
-                )
-            }
-            is LastViewState.ListFragment -> {
-                findOrCreateFragment(
-                    ListFragment::class.java, null, R.id.container
-                )
-            }
-            null -> throw IllegalStateException("null !!")
         }
     }
 }
 
-private fun FragmentTransaction.addOrReplace(@IdRes id: Int, fragment: Fragment, flag: Boolean) =
-    if (flag)
-        add(id, fragment, fragment::class.java.name)
-    else
-        replace(id, fragment, fragment::class.java.name)
+object ActivityUtil {
+    // Activity FrameLayout에 Fragment add.
+    fun addFragmentToActivity(fragmentManager: FragmentManager, fragment: Fragment, frameId: Int, addBackStack: Boolean) =
+        fragmentManager.beginTransaction().add(frameId, fragment, fragment::class.java.name).apply {
+            if (addBackStack) addToBackStack(null)
+        }.commitAllowingStateLoss()
+
+    // 현재 fragment replace
+    fun replaceFragmentToActivity(fragmentManager: FragmentManager, fragment: Fragment, frameId: Int, addBackStack: Boolean) =
+        fragmentManager.beginTransaction().replace(frameId, fragment, fragment::class.java.name).apply {
+            if (addBackStack) addToBackStack(null)
+        }.commitAllowingStateLoss()
+}

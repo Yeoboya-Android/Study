@@ -132,7 +132,7 @@ class LiveActivity : RtcBasedActivity(), RtcEngineEventHandler, SensorEventListe
 
     private fun initRoom(isBroadcaster: Boolean, orientation: String) {
         initVideoModule()
-        rtcEngine()!!.setVideoSource(RtcVideoConsumer())
+        rtcEngine()?.setVideoSource(RtcVideoConsumer())
         joinChannel(isBroadcaster, orientation)
     }
 
@@ -191,7 +191,7 @@ class LiveActivity : RtcBasedActivity(), RtcEngineEventHandler, SensorEventListe
             "adaptive" -> VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE
             else -> VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE
         }
-        rtcEngine()!!.setVideoEncoderConfiguration(
+        rtcEngine()?.setVideoEncoderConfiguration(
             VideoEncoderConfiguration(
                 VideoEncoderConfiguration.VD_640x360,
                 VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_24,
@@ -199,17 +199,17 @@ class LiveActivity : RtcBasedActivity(), RtcEngineEventHandler, SensorEventListe
                 convertedOrientation
             )
         )
-        rtcEngine()!!.setClientRole(if (isBroadcaster) Constants.CLIENT_ROLE_BROADCASTER else Constants.CLIENT_ROLE_AUDIENCE)
-        rtcEngine()!!.enableLocalAudio(false)
-        rtcEngine()!!.setBeautyEffectOptions(true, BeautyOptions())
-        rtcEngine()!!.joinChannel(AgoraConfig.TOKEN, AgoraConfig.CHANNEL_NAME, null, 0)
+        rtcEngine()?.setClientRole(if (isBroadcaster) Constants.CLIENT_ROLE_BROADCASTER else Constants.CLIENT_ROLE_AUDIENCE)
+        rtcEngine()?.enableLocalAudio(false)
+        rtcEngine()?.setBeautyEffectOptions(true, BeautyOptions())
+        rtcEngine()?.joinChannel(AgoraConfig.TOKEN, AgoraConfig.CHANNEL_NAME, null, 0)
     }
 
     override fun onStart() {
         Log.d("soohyangA", "onStart")
 
         super.onStart()
-        val sensor = mSensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        val sensor = mSensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         mSensorManager?.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
         mVideoManager?.startCapture()
         mFURenderer?.queueEvent { mFURenderer?.onSurfaceCreated() }

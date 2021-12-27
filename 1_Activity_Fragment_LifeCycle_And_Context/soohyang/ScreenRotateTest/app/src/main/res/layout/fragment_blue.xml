@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.soo.screenrotate.viewmodels.BlueViewModel" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0100FF">
+
+        <TextView
+            android:id="@+id/text_view_model_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.count}"
+            tools:text="0"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+            android:id="@+id/btn_view_model_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/text_view_model_count"
+            clickListener="@{clickListener}"
+            android:text="뷰모델 값 더하기"/>
+
+        <TextView
+            android:id="@+id/text_fragment_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="0"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/btn_view_model_count"/>
+
+        <Button
+            android:id="@+id/btn_fragment_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/text_fragment_count"
+            clickListener="@{clickListener}"
+            android:text="프래그먼트 값 더하기"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

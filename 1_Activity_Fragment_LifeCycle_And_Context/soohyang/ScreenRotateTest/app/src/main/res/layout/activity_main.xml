@@ -44,6 +44,13 @@
                 clickListener="@{clickListener}"
                 android:text="청취자 입장"/>
 
+            <Button
+                android:id="@+id/btn_rotate_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                clickListener="@{clickListener}"
+                android:text="프래그먼트 회전 테스트"/>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,8 +18,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-
-
     private val mViewModel: MainViewModel by viewModels()
     lateinit var mBinding: ActivityMainBinding
 
@@ -51,6 +49,9 @@ class MainActivity : AppCompatActivity() {
             R.id.btn_audience -> checkPermission {
                 enterRoom(false, "landscape")
             }
+            R.id.btn_rotate_fragment -> {
+                startRotateTest()
+            }
         }
     }
 
@@ -76,6 +77,10 @@ class MainActivity : AppCompatActivity() {
             putExtra(LiveActivity.KEY_ORIENTATION, orientation)
         }
         startActivity(liveIntent)
+    }
+
+    private fun startRotateTest() {
+        startActivity(Intent(this, RotateTestActivity::class.java))
     }
 
 

@@ -34,7 +34,7 @@ class GpsFragment : BaseFragment<FragmentGpsBinding, GpsViewModel>(), OnBackPres
         mBinding!!.lifecycleOwner = viewLifecycleOwner
     }
 
-    override fun initView(){
+    override fun initView(isConfigChange : Boolean){
         m_navigator = activity as BaseNavigator
         m_navigator.setOnBackButtonTouchListener(this)
 

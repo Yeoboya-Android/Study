@@ -34,7 +34,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
     abstract fun getLayoutResourceId(): Int
 
     abstract fun initDataBinding()
-    abstract fun initView()
+    abstract fun initView(isConfigChange : Boolean = false)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
         m_inflater = inflater
@@ -91,21 +91,6 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment
 
         m_frameLayout.addView(mBinding!!.root)
 
-        initView()
-
-        when(newConfig.orientation)
-        {
-            Configuration.ORIENTATION_PORTRAIT->{
-                //val aaa = mBinding!!.root as FrameLayout
-                //aaa.removeAllViews()
-
-                //val inflator = requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)
-
-                //mBinding = DataBindingUtil.inflate(inflater, getLayoutResourceId(), container, false)
-            }
-            Configuration.ORIENTATION_LANDSCAPE->{
-
-            }
-        }
+        initView(true)
     }
 }

@@ -33,20 +33,23 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(), ChatNav
         mBinding!!.lifecycleOwner = viewLifecycleOwner
     }
 
-    override fun initView(){
+    override fun initView(isConfigChange : Boolean){
         m_navigator = activity as MainNavigator
 
-        initChatView()
+        initChatView(isConfigChange)
 
         mViewModel.init(m_navigator, this, lifecycle)
     }
 
-    fun initChatView(){
+    fun initChatView(isConfigChange : Boolean){
         mBinding!!.chatList.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = ChatListAdapter(requireContext())
-            //(adapter as ChatListAdapter).addChatList(mViewModel.m_chatList)
-            //scrollToPosition(mViewModel.m_chatList.size-1)
+
+            if(isConfigChange){
+                (adapter as ChatListAdapter).addChatList(mViewModel.m_chatList)
+                scrollToPosition(mViewModel.m_chatList.size-1)
+            }
         }
     }
 

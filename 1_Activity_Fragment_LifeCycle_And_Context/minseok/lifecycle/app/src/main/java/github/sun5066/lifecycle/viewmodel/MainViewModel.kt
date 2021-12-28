@@ -8,10 +8,10 @@ import github.sun5066.lifecycle.util.asLiveData
 
 class MainViewModel(app: Application) : BaseViewModel(app) {
 
-    private val _lifeCycleState = MutableLiveData<LifeCycleModeState>(LifeCycleModeState.Default)
+    private val _lifeCycleState = MutableLiveData<LifeCycleModeState>(LifeCycleModeState.UnInit)
     val lifeCycleState = _lifeCycleState.asLiveData()
 
-    private val _lastViewState = MutableLiveData<LastViewState>(LastViewState.ListFragment)
+    private val _lastViewState = MutableLiveData<LastViewState>(LastViewState.UnInitialize)
     val lastViewState = _lastViewState.asLiveData()
 
     fun setLifeCycleModeState(state: LifeCycleModeState) {

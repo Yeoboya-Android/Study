@@ -28,7 +28,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun onResultPermission(granted: Boolean) {
         if (granted)
-            showListFragment()
+            mainViewModel.setLifeCycleModeState(LifeCycleModeState.Default)
         else
             finish()
     }
@@ -46,8 +46,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun showListFragment() {
         val isBackStack = mainViewModel.lifeCycleState.value is LifeCycleModeState.BackStack
-        if (mainViewModel.lastViewState.value is LastViewState.ListFragment) {
-            findOrCreateFragment(ListFragment::class.java, null, R.id.container, isBackStack)
+
+        when (mainViewModel.lastViewState.value!!) {
+            LastViewState.ListFragment,
+            LastViewState.UnInitialize -> {
+                findOrCreateFragment(ListFragment::class.java, null, R.id.container, isBackStack)
+            }
+            else -> Unit
         }
     }
 

@@ -8,11 +8,9 @@ import android.net.NetworkRequest
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getSystemService
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 
-class NetworkStateMonitor(private val lifecycleOwner: AppCompatActivity): ConnectivityManager.NetworkCallback(), LifecycleObserver
+class NetworkStateMonitor(private val lifecycleOwner: AppCompatActivity): ConnectivityManager.NetworkCallback(), DefaultLifecycleObserver
 {
     companion object {
         const val TAG = "NetworkStateMonitor"
@@ -43,16 +41,16 @@ class NetworkStateMonitor(private val lifecycleOwner: AppCompatActivity): Connec
         }
     }
 
-    /** 네트워크 모니터링 시작 **/
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun registerNetworkStateMonitor() {
+    /** 네트워크 모니터링 등록 **/
+    override fun onCreate(owner: LifecycleOwner) {
+        super.onCreate(owner)
         connectivityManager.registerNetworkCallback(networkRequest, this)
         Log.e(TAG,"registerNetworkStateMonitor() ")
     }
 
     /** 네트워크 모니터링 해제 **/
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun unregisterNetworkStateMonitor() {
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
         connectivityManager.unregisterNetworkCallback(this)
         lifecycleOwner.lifecycle.removeObserver(this)
         networkStateNavigator = null

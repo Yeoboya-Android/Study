@@ -1,5 +1,7 @@
 package com.lifecycletester.m.app.base
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Parcelable
 import android.widget.Toast
@@ -12,12 +14,12 @@ import com.lifecycletester.m.app.R
 import com.lifecycletester.m.app.util.ActivityLifecycleObserver
 import com.lifecycletester.m.app.util.ActivityUtil
 import com.lifecycletester.m.app.util.OnBackPressedListener
+import com.orhanobut.logger.Logger
 
 abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), BaseNavigator
 {
     /********************************************************/
     lateinit var mBinding: DB
-    var m_isActive : Boolean = false
     private val m_lifecycleObserver = ActivityLifecycleObserver(lifecycle)
     /********************************************************/
 
@@ -36,6 +38,8 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), BaseNav
      */
     abstract fun initView()
 
+    override fun getContext(): Context = this
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,21 +52,17 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), BaseNav
 
     override fun onResume() {
         super.onResume()
-
-        m_isActive = true
     }
 
     override fun onPause() {
         super.onPause()
-
-        m_isActive = false
     }
 
-    fun <T : Fragment> findOrCreateFragment(type: Class<T>, _param: Parcelable? = null, frameLayoutResId : Int): T{
+    fun <T : Fragment> findOrCreateFragment(type: Class<T>, _param: Parcelable? = null, frameResId : Int): T{
         //val frameLayoutResId: Int = R.id.content
 
         val fragmentManager = supportFragmentManager
-        val currentFragment = fragmentManager.findFragmentById(frameLayoutResId)
+        val currentFragment = fragmentManager.findFragmentById(frameResId)
 
         return when{
             isFinishing -> currentFragment as T
@@ -75,7 +75,7 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), BaseNav
                     instance.arguments = Bundle(1).apply { putParcelable("data", _param) }
                 }
 
-                ActivityUtil.addFragmentToActivity(fragmentManager, instance, frameLayoutResId)
+                ActivityUtil.addFragmentToActivity(fragmentManager, instance, frameResId)
                 instance
             }
 
@@ -87,7 +87,7 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), BaseNav
                     instance.arguments = Bundle(1).apply { putParcelable("data", _param) }
                 }
 
-                ActivityUtil.replaceFragmentToActivity(fragmentManager, instance, frameLayoutResId)
+                ActivityUtil.replaceFragmentToActivity(fragmentManager, instance, frameResId)
                 instance
             }
         }
@@ -129,6 +129,17 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), BaseNav
         Toast.makeText(this, _msg, Toast.LENGTH_LONG).show()
     }
 
+    fun popFragment(frameResId : Int){
+        val fragmentManager = supportFragmentManager
+        val currentFragment = fragmentManager.findFragmentById(frameResId)
+
+        Logger.i("popFragment :: ${fragmentManager.backStackEntryCount}")
+
+        fragmentManager.popBackStack()
+
+        //removeFragment(currentFragment)
+    }
+
     private var mBackPressedListener: OnBackPressedListener? = null
     override fun setOnBackButtonTouchListener(listener: OnBackPressedListener) {
         mBackPressedListener = listener
@@ -146,5 +157,11 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), BaseNav
         } ?: run{
             super.onBackPressed()
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        Logger.i("onConfigurationChanged")
     }
 }

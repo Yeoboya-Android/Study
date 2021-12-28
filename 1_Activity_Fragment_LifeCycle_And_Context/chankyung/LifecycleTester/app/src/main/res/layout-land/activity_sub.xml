@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lifecycletester.m.app.ui.sub.SubViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.sub.SubActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/gps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:id="@+id/content_gps"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <!--<Button
+                android:id="@+id/create_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gps 추가"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/content_gps"
+                android:onClick="@{viewModel.onClickListener}"/>-->
+
+            <!--<Button
+                android:id="@+id/remove_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gps 삭제"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintLeft_toRightOf="@id/create_gps"
+                app:layout_constraintTop_toBottomOf="@id/content_gps"
+                android:onClick="@{viewModel.onClickListener}"/>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

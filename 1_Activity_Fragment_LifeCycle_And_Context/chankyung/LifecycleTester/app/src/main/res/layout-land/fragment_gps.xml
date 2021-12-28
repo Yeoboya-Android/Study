@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.lifecycletester.m.app.R"/>
         <variable
             name="viewModel"
             type="com.lifecycletester.m.app.ui.fragment.GpsViewModel" />
@@ -12,7 +13,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp">
 
         <Button
             android:id="@+id/btn_check_gps"
@@ -20,7 +22,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:text="GPS 체크"
+            android:text="@{context.resources.getString(R.string.gps_check)}"
             android:onClick="@{viewModel.onClickListener}"/>
 
         <TextView

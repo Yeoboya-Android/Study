@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="maxTextEditTextAttr">
+        <attr name="maxLineCount" format="integer" />
+        <attr name="focus" format="boolean" />
+        <attr name="focusClear" format="boolean" />
+        <attr name="onTextTrim" format="boolean" />
+        <attr name="focusBackground" format="reference" />
+        <attr name="defaultBackground" format="reference" />
+    </declare-styleable>
+
+</resources>

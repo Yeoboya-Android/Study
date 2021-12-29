@@ -14,7 +14,8 @@ import androidx.lifecycle.LifecycleObserver
 
 abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment() {
 
-    lateinit var mBinding: DB
+    // 바인딩의 초기화를 autoCleared로 위임
+    var mBinding by autoCleared<DB>()
     abstract val mViewModel: VM
 
     @LayoutRes

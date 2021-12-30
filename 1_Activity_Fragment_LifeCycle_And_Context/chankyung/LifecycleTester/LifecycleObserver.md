@@ -1,4 +1,4 @@
-# LifeCycle
+# LifeCycleObserver
 ===========================
 
 # Activity가 새로운 Activity를 생성시 LifeCycle과정

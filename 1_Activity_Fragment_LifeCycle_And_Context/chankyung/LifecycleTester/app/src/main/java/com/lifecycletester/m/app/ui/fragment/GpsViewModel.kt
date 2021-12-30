@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lifecycletester.m.app.MainNavigator
 import com.lifecycletester.m.app.R
+import com.lifecycletester.m.app.base.BaseNavigator
 import com.lifecycletester.m.app.base.BaseViewModel
 import com.lifecycletester.m.app.util.GpsHelper
 import com.orhanobut.logger.Logger
@@ -18,8 +19,7 @@ import java.util.concurrent.TimeUnit
 class GpsViewModel : BaseViewModel()
 {
     /*********************************************************/
-    lateinit var m_context : Context
-    lateinit var m_navigator : MainNavigator
+    lateinit var m_navigator : BaseNavigator
 
     lateinit var m_gpsHelper : GpsHelper
 
@@ -39,22 +39,18 @@ class GpsViewModel : BaseViewModel()
                             Logger.i("${_lat}, ${_lng}, ${_isSuccess}")
                             obsGpsValue.value = String.format("${_lat}, ${_lng}, ${_isSuccess}")
 
-                            Toast.makeText(m_context, "aaaaaa", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(m_navigator.getContext(), "aaaaaa", Toast.LENGTH_SHORT).show()
                         }
                     })
 
-                m_navigator.removeGpsFragment()
+                //m_navigator.removeGpsFragment()
             }
         }
     }
 
-    fun init(_context : Context, _navigator : MainNavigator, _lifeCycle : Lifecycle){
-        m_context = _context
+    fun init(_navigator : BaseNavigator, _lifeCycle : Lifecycle){
         m_navigator = _navigator
 
-        m_gpsHelper = GpsHelper(_context, _lifeCycle).apply {
-            init()
-        }
-        //m_context = _context
+        m_gpsHelper = GpsHelper(m_navigator.getContext(), _lifeCycle).apply { init() }
     }
 }

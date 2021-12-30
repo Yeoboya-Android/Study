@@ -75,7 +75,7 @@ class MyService : Service() {
 때문에 우리는 intent에 flag를 추가해줌으로 task에 새로운 액티비티를 쌓을 수 있도록 해야한다.
 
 ```
-// 이렇게 하면 된다.
+// 이렇게 하면 된다
 class MyService : Service() {
 
     override fun onBind(intent: Intent): IBinder? {

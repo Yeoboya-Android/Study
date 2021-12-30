@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">lifecycle</string>
+    <string name="defaultRadio">Default</string>
+    <string name="backstack">BackStack</string>
+    <string name="dialog">Dialog</string>
+    <string name="newactivity">NewActivity</string>
+
+    <string name="toast_state_null">상태를 찾을 수 없습니다!</string>
+</resources>

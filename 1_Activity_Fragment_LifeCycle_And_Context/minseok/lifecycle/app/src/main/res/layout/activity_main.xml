@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.MainActivity">
+
+        <com.askjeffreyliu.flexboxradiogroup.FlexBoxRadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:alignContent="space_around"
+            app:alignItems="flex_start"
+            app:flexWrap="wrap">
+
+            <RadioButton
+                android:id="@+id/radio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClickListeners"
+                android:text="@string/defaultRadio"
+                android:checked="true"
+                tools:ignore="UsingOnClickInXml"/>
+
+            <RadioButton
+                android:id="@+id/radio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClickListeners"
+                android:text="@string/backstack"
+                tools:ignore="UsingOnClickInXml"/>
+
+            <RadioButton
+                android:id="@+id/radio3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClickListeners"
+                android:text="@string/dialog"
+                tools:ignore="UsingOnClickInXml"/>
+
+            <RadioButton
+                android:id="@+id/radio4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClickListeners"
+                android:text="@string/newactivity"
+                tools:ignore="UsingOnClickInXml" />
+
+        </com.askjeffreyliu.flexboxradiogroup.FlexBoxRadioGroup>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/radioGroup"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

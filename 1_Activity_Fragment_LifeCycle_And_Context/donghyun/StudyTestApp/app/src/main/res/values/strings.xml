@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">StudyTestApp</string>
+    <string name="text_home">홈</string>
+    <string name="text_chat">채팅</string>
+    <string name="text_myInfo">나의 정보</string>
+</resources>

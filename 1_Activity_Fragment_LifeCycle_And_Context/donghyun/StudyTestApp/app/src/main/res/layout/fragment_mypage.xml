@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.example.studytestapp.mypage.MyPageViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp">
+
+        <com.example.studytestapp.widget.MaxLineEditText
+            android:id="@+id/emailEditText"
+            style="@style/SettingEditTextStyle"
+            changeEditTextListener="@{vm.changeEditTextListener}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@id/passwordEditText"
+            android:text="@{vm.id}"
+            app:focusBackground="@drawable/bg_bottom_border_white"
+            app:focusClear="@{vm.clearFocus}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:enabled="@{vm.isEnabled}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:maxLineCount="1"
+            app:maxTextLength="@{vm.CONTS_MAX_LENGTH}"
+            app:onTextTrim="true" />
+
+        <com.example.studytestapp.widget.MaxLineEditText
+            android:id="@+id/passwordEditText"
+            style="@style/SettingEditTextStyle"
+            changeEditTextListener="@{vm.changeEditTextListener}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:enabled="@{vm.isEnabled}"
+            android:layout_marginBottom="20dp"
+            android:inputType="textPassword"
+            android:text="@{vm.password}"
+            app:focusBackground="@drawable/bg_bottom_border_white"
+            app:focusClear="@{vm.clearFocus}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emailEditText"
+            app:maxLineCount="1"
+            app:maxTextLength="@{vm.CONTS_MAX_LENGTH}"
+            app:onTextTrim="true" />
+
+        <Button
+            android:id="@+id/signUpButton"
+            onClickListener="@{vm.clickListener}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/orange"
+            android:enabled="@{vm.isEnabled}"
+            android:text="회원가입"
+            app:layout_constraintEnd_toStartOf="@id/signInOutButton"
+            app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
+
+        <Button
+            android:id="@+id/signInOutButton"
+            onClickListener="@{vm.clickListener}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/orange"
+            android:text="@{vm.signInOutText}"
+            app:layout_constraintEnd_toEndOf="@id/passwordEditText"
+            app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

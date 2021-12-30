@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.lifecycletester.m.app.R"/>
+        <variable
+            name="viewModel"
+            type="com.lifecycletester.m.app.ui.fragment.GpsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp">
+
+        <Button
+            android:id="@+id/btn_check_gps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="@{context.resources.getString(R.string.gps_check)}"
+            android:onClick="@{viewModel.onClickListener}"/>
+
+        <TextView
+            android:id="@+id/tv_gps_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toTopOf="@id/btn_check_gps"
+            app:layout_constraintBottom_toBottomOf="@id/btn_check_gps"
+            app:layout_constraintLeft_toRightOf="@id/btn_check_gps"
+            android:text="@{viewModel.gpsValue}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

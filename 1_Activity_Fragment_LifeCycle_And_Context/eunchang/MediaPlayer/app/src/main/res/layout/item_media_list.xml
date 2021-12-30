@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_none"
+        android:paddingVertical="4dp"
+        android:paddingHorizontal="15dp">
+
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@drawable/example_thumbnail"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintStart_toEndOf="@id/thumbnail"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/artist"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:fontFamily="@font/regular"
+            tools:text="title"/>
+
+        <TextView
+            android:id="@+id/artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/small_text_size"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/thumbnail"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="artistName"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

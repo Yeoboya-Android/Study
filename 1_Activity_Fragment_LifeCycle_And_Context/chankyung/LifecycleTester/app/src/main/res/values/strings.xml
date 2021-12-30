@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">LifecycleTester</string>
+    <string name="gps_check">GPS 체크</string>
+</resources>

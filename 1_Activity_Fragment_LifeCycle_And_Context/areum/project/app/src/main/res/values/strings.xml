@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">NetworkStateMonitorTest</string>
+    <string name="xml_context_example">네트워크 상태 : %s</string>
+</resources>

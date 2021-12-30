@@ -54,5 +54,5 @@
 
 ---
 
-- [스터디 필독](https://github.com/Yeoboya-Android-Study/Yeoboya-Android-Study/blob/main/README.md)
-- [샘플 확인하러가기](https://github.com/Yeoboya-Android-Study/Yeoboya-Android-Study/blob/main/sample.md)
+- [스터디 필독](https://github.com/Yeoboya-Android-Study/Study/wiki)
+- [샘플 확인하러가기](https://github.com/Yeoboya-Android-Study/Study/wiki/Sample)

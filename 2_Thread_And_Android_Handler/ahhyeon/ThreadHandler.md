@@ -8,7 +8,7 @@
 - Process는 독립적인 메모리 공간을 부여받아 코드를 실행시키는 Thread와 이 메모리 공간을 공유
 - Multi Thread 환경이라면 여러 Thread가 이 Process의 메모리를 공유
 
-![Process](/preview/Process.png)
+![Process](preview/Process.png)
 
 - 앱이 Process를 시작하고 최초로 갖는 Thread가 MainThread (=UIThread)
     - 안드로이드 애플리케이션을 시작하면 시스템은 메인 액티비티를 메모리로 올려 프로세스로 만들며, 이 때 메인 스레드가 자동으로 생성된다.

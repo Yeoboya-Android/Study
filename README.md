@@ -14,7 +14,7 @@
 - ⚪ 안드로이드 프로세스와 태스크
 - ⚪ 안드로이드 서비스 컴포넌트
 
-## 🤝 2번째 주제 팀
+## 🤝 현재 팀 목록
 - A조
   - [오혜미](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/hyemi)
   - [김민영](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/minyoung)
@@ -54,5 +54,5 @@
 
 ---
 
-- [스터디 필독](https://github.com/Yeoboya-Android-Study/Yeoboya-Android-Study/blob/main/README.md)
-- [샘플 확인하러가기](https://github.com/Yeoboya-Android-Study/Yeoboya-Android-Study/blob/main/sample.md)
+- [스터디 필독](https://github.com/Yeoboya-Android-Study/Study/wiki)
+- [샘플 확인하러가기](https://github.com/Yeoboya-Android-Study/Study/wiki/Sample)

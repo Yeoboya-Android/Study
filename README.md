@@ -16,18 +16,18 @@
 
 ## 🤝 현재 팀 목록
 - A조
-  - [오혜미](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/hyemi)
-  - [김민영](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/minyoung)
-  - [김동현](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/donghyun)
+  - [오혜미](https://github.com/HyemiOh/Study)
+  - [김민영](https://github.com/MYKIM95/Study)
+  - [김동현](https://github.com/net772/Study)
 - B조
-  - [김은창](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/eunchang)
-  - [남현웅](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/hyunwoong)
-  - [김아름](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/areum)
+  - [김은창](https://github.com/eunchang233/Study)
+  - [남현웅](https://github.com/Namhyunwoong/Study)
+  - [김아름](https://github.com/ann1909/Study)
 - C조
-  - [박찬경](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/chankyung/LifecycleTester)
-  - [양수향](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/soohyang)
-  - [김민석](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/minseok)
-  - [이아현](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/ahhyeon)
+  - [박찬경](https://github.com/userlife/Study)
+  - [양수향](https://github.com/ysgy1121/Study-1)
+  - [김민석](https://github.com/sun5066/Study-1)
+  - [이아현](https://github.com/Ahhyeon-Lee/Study)
   
 
 <details>

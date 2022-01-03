@@ -1,3 +1,9 @@
+---
+topic: 스레드와 핸들러
+description: 안드로이드 스레드와 핸들러 정리
+author: 김아름
+---
+
 # Android Thread
  - 프로세스 내에서 순차적으로 실행되는 실행 흐름의 최소 단위이다.
 ## Main/UI Thread

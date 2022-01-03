@@ -19,19 +19,19 @@
 - 위 그림을 보면, Thread #1에서 생성된 Handler 객체가 Thread #1의 Looper와 Message Queue에 관련되어 있음을 알 수 있다. 그리고 Thread #2에서는 Thread #1의 Handler를 통해 MessageQueue에 작업(Message or Runnable)을 전달할 수 있다.
 
 - 핸들러의 역할
-	1) 다른 스레드에서 수행되어야 하는 작업을 Message Queue에 enqueue
-	2) 미래 특정 시점에 실행되어야 하는 Message나 Runnable 객체 스케줄링
+	1. 다른 스레드에서 수행되어야 하는 작업을 Message Queue에 enqueue
+	2. 미래 특정 시점에 실행되어야 하는 Message나 Runnable 객체 스케줄링
 
 - 핸들러가 처리하는 작업 단위로 Message와 Runnable이 있는데, 이 두 객체에 대해 MessageQueue 스케줄링을 지원하는 메소드가 각각 분리되어 있다.
-	1) Message : sendMessage(), sendEmptyMessage(), sendMessageAtTime(), sendMessageDelayed() 등
-	2) Runnable : post(), postAtTime(), postDelayed() 등
+	1. Message : sendMessage(), sendEmptyMessage(), sendMessageAtTime(), sendMessageDelayed() 등
+	2. Runnable : post(), postAtTime(), postDelayed() 등
 
 - 이렇게 MessageQueue에 들어가 있는 Message 객체들을 꺼내어 실행하는 것이 handleMessage() 메소드이다. 꺼내온 Message에 대해 어떻게 처리할 것인가에 대해 구현이 되어있지 않기 때문에, 사용자가 반드시 재정의 해야한다.
 - Runnable 객체는 객테 자체가 어떤 행동을 정의했기 때문에 별도로 재정의해야하는 메소드 없이 post() 메소드로 처리하면 된다.
 
 ## 참고사이트
-https://readystory.tistory.com/50
-https://recipes4dev.tistory.com/170
-https://recipes4dev.tistory.com/166
-https://developer.android.com/guide/components/processes-and-threads?hl=ko
-https://developer.android.com/reference/android/os/Handler
+- https://readystory.tistory.com/50
+- https://recipes4dev.tistory.com/170
+- https://recipes4dev.tistory.com/166
+- https://developer.android.com/guide/components/processes-and-threads?hl=ko
+- https://developer.android.com/reference/android/os/Handler

@@ -102,3 +102,8 @@ Android의 Kotlin 코루틴
   - 대표적으로 `launch, async`가 있으며 이 외에 `actor, produce, broadcast`가 있다.(현재 Android에서는 사용하는걸 못봄)
     - launch: `Job`을 반환하며 람다로 결과를 통지 받는다.
     - async<T>: `Deferred<T>`를 반환받으며 `.await()` 을 호출하면 래핑된 값을 반환한다.
+
+# Reference
+- [Android Developers 1](https://developer.android.com/kotlin/coroutines/coroutines-adv?hl=ko)
+- [Android Developers 2](https://developer.android.com/kotlin/coroutines/coroutines-best-practices?hl=ko)
+- [심명표 블로그](https://myungpyo.medium.com/reading-coroutine-official-guide-thoroughly-part-0-20176d431e9d)

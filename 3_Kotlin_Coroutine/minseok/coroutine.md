@@ -98,10 +98,10 @@ Android의 Kotlin 코루틴
   >
   > 해당 스코프는 object 클래스(싱글톤)이며 앱의 생명주기를 따르기에 GlobalScope의 사용이 남발할 경우 관리하기 힘든 상황이 생길 수 있다.(메모리 누수 발생 및 앱이 종료 되어야 작업이 종료되는 최악의 상황)
 
-  `Coroutine Builder`
-  - 대표적으로 `launch, async`가 있으며 이 외에 `actor, produce, broadcast`가 있다.(현재 Android에서는 사용하는걸 못봄)
-    - launch: `Job`을 반환하며 람다로 결과를 통지 받는다.
-    - async<T>: `Deferred<T>`를 반환받으며 `.await()` 을 호출하면 래핑된 값을 반환한다.
+`Coroutine Builder`
+- 대표적으로 `launch, async`가 있으며 이 외에 `actor, produce, broadcast`가 있다.(현재 Android에서는 사용하는걸 못봄)
+  - launch: `Job`을 반환하며 람다로 결과를 통지 받는다.
+  - async<T>: `Deferred<T>`를 반환받으며 `.await()` 을 호출하면 래핑되어 있던 값을 return한다.
 
 # Reference
 - [Android Developers 1](https://developer.android.com/kotlin/coroutines/coroutines-adv?hl=ko)

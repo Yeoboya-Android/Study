@@ -1,3 +1,4 @@
+
 # Process & Thread
 
 Thread 는 Process 보다 작은 단위의 실행 인스턴스로만 알고 있는데, 메모리 영역도 조금 다릅니다.
@@ -105,6 +106,24 @@ Flow에서의 Producer는 flow{ } 블록 내부에서의 emit()을 통해 데이
 
 2. 휴대폰 상의 DB(Local DataSource)
 
+```
+class DustRemoteDataSource(
+	private val dustApi: DustApi
+) {
+	fun getDustInfoFlow() : Flow<List<DustInfo>> = flow { //1. Flow 블록 선언
+    	while (true) {
+        	val dustInfos = dustApi.fetchLastedDustInfo() //2. 데이터 받아오기
+            emit(dustInfos) //3. Producer가 데이터 발행
+        }
+    }
+}
+```
+
+가장 간단한 방법으로 flow{ }를 통해서 생성이 가능
+
+데이터 전달을 위해서 emit 함수를 사용
+
+###   
 
 ### - Intermediary(중간 연산자)
 
@@ -118,6 +137,15 @@ Flow에서의 Producer는 flow{ } 블록 내부에서의 emit()을 통해 데이
 
 대표적인 중간 연산자는 map(데이터 변형), filter(데이터 필터링), onEach(모든 데이터마다 연산 수행) 등의 중간 연산자가 있다.
 
+```
+class DustRepository(
+    private val dustRemoteDataSource: DustRemoteDataSource,
+) {
+    fun getDustsInfoOfViewItem(locale : Locale) =
+    	dustRemoteDataSource.getDustInfoFlow().map{ it.filter{ this.locale == locale } }
+}
+```
+
 ### - Consumer(소비자)
 
 ![](https://blog.kakaocdn.net/dn/tsNpL/btrqbE6HHNQ/QSqbE43I9gaAqn4bKYjfDk/img.png)
@@ -126,12 +154,25 @@ Flow에서의 Producer는 flow{ } 블록 내부에서의 emit()을 통해 데이
 
 안드로이드 상에서 데이터의 소비자는 보통 UI 구성요소이다. UI는 데이터를 소비하여 데이터에 맞게 UI를 그려낸다.
 
-  
+```
+class DustViewModel(
+	private val dustRepository: DustRepository
+) : ViewModel() {
+	fun collectDustInfoOf(local: Local) = 
+        viewModelScope.launch {
+            dustRepository.getDustInfoOf(locale).collect { dustInfos ->
+            	//
+            }
+        }
+    }
+}
+```
 
 ### Flow 디스패처 분리 사용
 
 flow의 context를 변경하는 유일한 방법은 업스트림 context를 변경하는 flowOn 연산자입니다.
 
+```
 fun simple(): Flow<Int> = flow {
     for (i in 1..3) {
         Thread.sleep(100) 
@@ -145,6 +186,7 @@ fun main() = runBlocking<Unit> {
         log("Collected $value") 
     } 
 }
+```
 
 결과
 
@@ -155,7 +197,6 @@ fun main() = runBlocking<Unit> {
 [DefaultDispatcher-worker-1] Emitting 3  
 [main] Collected 3
 
-  
 
   
 
@@ -167,4 +208,4 @@ fun main() = runBlocking<Unit> {
 
 [https://jaejong.tistory.com/67](https://jaejong.tistory.com/67)  - 플로우 연산
 
-[https://timewizhan.tistory.com/entry/Coroutine-Flow-1%EB%B6%80﻿](https://timewizhan.tistory.com/entry/Coroutine-Flow-1%EB%B6%80
+[https://timewizhan.tistory.com/entry/Coroutine-Flow-1%EB%B6%80](https://timewizhan.tistory.com/entry/Coroutine-Flow-1%EB%B6%80)

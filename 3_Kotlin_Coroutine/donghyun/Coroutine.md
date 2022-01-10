@@ -105,19 +105,6 @@ Flow에서의 Producer는 flow{ } 블록 내부에서의 emit()을 통해 데이
 
 2. 휴대폰 상의 DB(Local DataSource)
 
-private fun getNumbers(): Flow<Int> = flow { 
-	for (i in 1..100) { 
-    	emit(i) 
-        println("Emit $i") // 1 ~ 100 까지 방출
-    } 
-    emitAll((101 .. 200).asFlow()) // 101 ~ 200 까지 방출 
-}
-
-가장 간단한 방법으로 flow{ }를 통해서 생성이 가능
-
-데이터 전달을 위해서 emit 함수를 사용
-
-###   
 
 ### - Intermediary(중간 연산자)
 

@@ -123,7 +123,7 @@ Android의 Kotlin 코루틴
   
 > 코루틴에서는 RxJava를 대체할 수 있는 반응형 패러다임인 `Flow`를 제공함(이 외에도 `channel`, `produce` 같은 데이터스트림을 구현할 수 있는 클래스가 존재함)
 >
-> `Observable` 패턴인 RxJava와 다르게 `Iterator/Sequence` 패턴이 적용되어있고 `suspend` 내부적으로 키워드를 사용하여 비동기적으로 돌아가며,
+> `Observable` 패턴인 RxJava와 다르게 `Iterator/Sequence` 패턴이 적용되어있고 내부적으로 `suspend` 키워드를 사용하여 비동기적으로 돌아가며,
 > RxJava와 마찬가지로 `Hot/Cold Stream`이 존재함.
 >
 > - `Cold Flow`(`Flow`)

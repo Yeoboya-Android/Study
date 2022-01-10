@@ -110,7 +110,7 @@ Android의 Kotlin 코루틴
   - withContext
     - `async`가 `Deferred<T>`를 반환하는 반면에 `withContext`는 스코프내 가장 마지막 줄의 값을 반환하며, 해당 스코프의 `Dispatcher` 지정이 가능하다.
 
-  > [[보러가기]](https://developer.android.com/kotlin/coroutines/coroutines-best-practices?hl=ko#inject-dispatchers)] 공식문서에서는 `withContext()`의 `Dispatcher`를 하드코딩 하지않는걸 권장하고있다.
+  > [[보러가기]](https://developer.android.com/kotlin/coroutines/coroutines-best-practices?hl=ko#inject-dispatchers) 공식문서에서는 `withContext()`의 `Dispatcher`를 하드코딩 하지않는걸 권장하고있다.
 
 # Reactive Stream
 
@@ -130,8 +130,8 @@ Android의 Kotlin 코루틴
 >   - `Collector`가 생성되기 전까지는 Flow가 구현되지 않는다.
 >   - `Collector`가 생성 될때마다 새로운 Flow를 가지며 이는 각각 독립적인 데이터 스트림이다. 1:1 관계를 가진 unicast 매커니즘
 >   - 주로 DB, RestFul API 통신시 사용됨
->   - [shareIn}(https://medium.com/androiddevelopers/things-to-know-about-flows-sharein-and-statein-operators-20e6ccb2bc74) 함수를 통해 SharedFlow(Hot Flow)로 전환할 수 있다.
->   - [stateIn}(https://medium.com/androiddevelopers/things-to-know-about-flows-sharein-and-statein-operators-20e6ccb2bc74) 함수를 통해 StateFlow(Hot Flow)로 전환할 수 있다.
+>   - [[shareIn]](https://medium.com/androiddevelopers/things-to-know-about-flows-sharein-and-statein-operators-20e6ccb2bc74) 함수를 통해 SharedFlow(Hot Flow)로 전환할 수 있다.
+>   - [[stateIn]](https://medium.com/androiddevelopers/things-to-know-about-flows-sharein-and-statein-operators-20e6ccb2bc74) 함수를 통해 StateFlow(Hot Flow)로 전환할 수 있다.
 > - `Hot Flow`(`SharedFlow`, `StateFlow`)
 >   - `Collector`가 생성되지 않아도 데이터를 배출하며, 1:n 관계를 가진 multicast 매커니즘이다.
 >   - `SharedFlow`

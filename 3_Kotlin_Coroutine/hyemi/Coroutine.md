@@ -14,6 +14,7 @@ launch는 결과를 반환하지 않고 job이 반환된다.
 with(CoroutineScope(Dispatchers.Main) {
 	val job: Job = launch { println(1) }
 }
+```
 위와 같이 job이 생성 되면 생성과 동시에 실행된다. 코루틴 실행의 유연성이 떨어진다. 이를 해결하기 위해 job을 생성한 후 필요할 때 수행하도록 하는 옵션이 있다.
 
 ## async{}

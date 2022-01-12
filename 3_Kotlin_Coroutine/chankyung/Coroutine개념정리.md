@@ -40,10 +40,10 @@
                                  }
                                  
                          결과 :
-                         ![Alt text](./images/dispacher_main.png)
+                         ![Alt text](./images/coroutine_dispacher_main.png)
                          
                          Dispatchers.IO나 Dispatchers.Default로 실행 결과
-                         ![Alt text](./images/dispacher_io_default.png)
+                         ![Alt text](./images/coroutine_dispacher_io_default.png)
                          ````````
   - Dispatchers.Unconfined : 호출한 컨텍스트를 기본으로 사용하는데 중단 후 다시 실행될 때 컨텍스트가 바뀌면 바뀐 컨텍스트를 따라가는 특이한 디스패쳐???
   

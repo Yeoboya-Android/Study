@@ -1,11 +1,17 @@
 package github.sun5066.lifecycle.ui.activity
 
 import android.Manifest
+import android.animation.ObjectAnimator
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnticipateInterpolator
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import github.sun5066.data.model.ImageData
@@ -33,7 +39,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             finish()
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
+    private fun initSplash() {
+    }
+
     override fun initBinding() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            initSplash()
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
 

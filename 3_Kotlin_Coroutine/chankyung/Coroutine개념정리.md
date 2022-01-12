@@ -542,4 +542,80 @@
     
     그런데 테스트 해보면 알겠지만  secondChildJob이 실행되기 전에 firstChildJob이 throw AssertionError을 떨구는경우가 생긴다. 결국 secondChildJob이 실행 될때도 있고, 안될때도 있다.
     
-================================ To Be Continue ================================================================    
+# Channel
+  - 코루틴에서 생성한 데이터를 또 다른 코루틴에게 전달할 수 있다.
+    이때 사용하는것이 Channel이다.
+    
+    ````````
+    fun testChannel(){
+        val channel = Channel<Int>()
+    
+        CoroutineScope(Dispatchers.IO).launch {
+            for (x in 1..5) {
+                channel.send(x * x)
+            }
+        }
+    
+        CoroutineScope(Dispatchers.IO).launch {
+            while (true){
+                val result = channel.receive()      //무한 대기
+    
+                Log.i("aaaa", "$result" )
+            }
+        }
+    }
+    ````````
+    
+# producer-consumer 패턴
+  - 데이터를 생산하는쪽과 소비하는쪽을 구현하는 패턴.
+  
+    ````````
+    fun testConsume(){
+        CoroutineScope(Dispatchers.Main).launch {
+            val data = testProduce()
+            data.consumeEach {
+                Log.i("aaaa", "$it" )
+            }
+        }
+    }
+    
+    fun CoroutineScope.testProduce() : ReceiveChannel<Int>{
+        return produce {
+            for(x in 1..10){
+                delay(1000)
+                send(x)
+            }
+        }
+    }
+    ````````
+    
+  - 데이터를 생산하고 파이프라인으로 묶어 가공하고 이를 받아서 처리 할 수도 있다.
+  
+    ````````
+    fun testConsume(){
+        CoroutineScope(Dispatchers.Main).launch {
+            val orgData = testProduce()
+            val modifyData = modifyProduceData(orgData)
+            modifyData.consumeEach {
+                Log.i("aaaa", "$it" )
+            }
+        }
+    }
+    
+    fun CoroutineScope.testProduce() : ReceiveChannel<Int>{
+        return produce {
+            for(x in 1..10){
+                delay(1000)
+                send(x)
+            }
+        }
+    }
+    
+    fun CoroutineScope.modifyProduceData(numbers : ReceiveChannel<Int>) : ReceiveChannel<Int>{
+        return produce {
+            for(x in numbers){
+                send(x * x)
+            }
+        }
+    }
+    ````````    

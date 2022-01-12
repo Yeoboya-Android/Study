@@ -48,9 +48,13 @@ Author : Min Young Kim (김민영)
 - Coroutine Scope 는 launch 또는 async 를 사용하여 만든 coroutine 을 추적합니다.
 - 특정 수명 주기 클래스에 자체 Coroutine Scope 를 제공합니다.
 > Activity, Fragment -> lifecycleScope
+> 
 > View -> ViewTreeLifecycleOwner + lifecycleScope
+> 
 > ViewModel -> viewModelScope
+> 
 > Service -> LifecycleService + lifecycleScope
+> 
 > Application -> ProcessLifecycleOwner + lifecycleScope
 
 ## Launch 와 Async

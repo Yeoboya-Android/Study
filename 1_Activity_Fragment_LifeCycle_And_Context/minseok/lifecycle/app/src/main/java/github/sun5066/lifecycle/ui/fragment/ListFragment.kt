@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import github.sun5066.lifecycle.databinding.FragmentListBinding
-import github.sun5066.lifecycle.ui.activity.DetailActivity
-import github.sun5066.lifecycle.ui.activity.MainActivity
+import github.sun5066.lifecycle.ui.activity.*
 import github.sun5066.lifecycle.ui.adapter.ImageListAdapter
 import github.sun5066.lifecycle.ui.dialog.DetailDialog
 import github.sun5066.lifecycle.ui.state.LastViewState
@@ -55,6 +55,12 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
     }
 
     override fun initViews(view: View) {
+        requireActivity().setStatusBarTransparent()
+
+        binding.content.updatePadding(
+            bottom = requireContext().navigationHeight()
+        )
+
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = imageListAdapter
@@ -70,5 +76,11 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
     override fun onResume() {
         super.onResume()
         mainViewModel.setLastViewState(LastViewState.ListFragment)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        requireActivity().setStatusBarOrigin()
     }
 }

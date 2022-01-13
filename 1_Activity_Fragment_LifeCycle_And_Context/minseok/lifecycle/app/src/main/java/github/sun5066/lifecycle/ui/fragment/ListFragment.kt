@@ -67,7 +67,7 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
         }
     }
 
-    override fun fetchObservables() {
+    override fun fetchData() {
         listViewModel.imageList.observe(viewLifecycleOwner) { imageList ->
             imageListAdapter.notifyData(imageList)
         }

@@ -1,10 +1,14 @@
 package github.sun5066.lifecycle.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.viewModelScope
 import github.sun5066.data.model.ImageData
 import github.sun5066.domain.usecase.GetImageDataUseCase
 import github.sun5066.lifecycle.util.MutableLiveArrayList
 import github.sun5066.lifecycle.util.asLiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 
 class ListViewModel(
     app: Application
@@ -18,8 +22,13 @@ class ListViewModel(
     }
 
     private fun setImageList() {
-        val list = GetImageDataUseCase(applicationContext).invoke()
-        _imageList.addAll(list)
+        GetImageDataUseCase(applicationContext).invoke()
+            .flowOn(Dispatchers.IO)
+            .onEach {
+                delay(1)
+                _imageList.add(it)
+            }
+            .launchIn(viewModelScope)
     }
 
     fun refreshList() {

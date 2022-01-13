@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import github.sun5066.data.model.ImageData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class ImageDataRepository(private val context: Context) {
 
@@ -14,9 +16,8 @@ class ImageDataRepository(private val context: Context) {
         private const val DATE_TOKEN = MediaStore.Images.ImageColumns.DATE_TAKEN
     }
 
-    fun selectAll(): List<ImageData> {
+    fun selectAll(): Flow<ImageData> = flow {
         val projection = arrayOf(ID, DISPLAY_NAME, DATE_TOKEN)
-        val imageList = ArrayList<ImageData>()
 
         context.contentResolver.query(
             CONTENT_URI, projection, null, null, "$DATE_TOKEN DESC"
@@ -31,11 +32,9 @@ class ImageDataRepository(private val context: Context) {
                     CONTENT_URI, id.toString()
                 )
 
-                imageList.add(
-                    ImageData(id, displayName, contentUri)
-                )
+                val imageData = ImageData(id, displayName, contentUri)
+                emit(imageData)
             }
         }
-        return imageList
     }
 }

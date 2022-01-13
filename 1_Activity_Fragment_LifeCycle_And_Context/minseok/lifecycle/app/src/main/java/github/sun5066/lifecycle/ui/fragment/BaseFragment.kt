@@ -23,7 +23,7 @@ abstract class BaseFragment<B: ViewDataBinding> : Fragment() {
     abstract fun initBinding(inflater: LayoutInflater, container: ViewGroup?)
     open fun initAdapters() {}
     abstract fun initViews(view: View)
-    open fun fetchObservables() {}
+    open fun fetchData() {}
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -46,7 +46,7 @@ abstract class BaseFragment<B: ViewDataBinding> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fetchObservables()
+        fetchData()
         initAdapters()
         initViews(view)
         Log.d("123", "$TAG 333::${Thread.currentThread().stackTrace[4].methodName}")

@@ -3,19 +3,34 @@ package github.sun5066.lifecycle.ui.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import github.sun5066.data.model.ImageData
 import github.sun5066.lifecycle.R
 import github.sun5066.lifecycle.databinding.ItemImageListBinding
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class BindingViewHolder(val binding: ItemImageListBinding) : RecyclerView.ViewHolder(binding.root)
 
 class ImageListAdapter(
     private val context: Context,
-    private val onClick: (ImageData) -> Unit
+    lifecycleScope: LifecycleCoroutineScope,
+    imageDataFlow: StateFlow<ImageData?>,
+    private val onClick: (ImageData) -> Unit,
 ) :
     RecyclerView.Adapter<BindingViewHolder>() {
+
+    init {
+        imageDataFlow.onEach { imageData ->
+            imageData?.apply {
+                imageList.add(imageData)
+                notifyItemInserted(itemCount - 1)
+            }
+        }.launchIn(lifecycleScope)
+    }
 
     private val imageList = arrayListOf<ImageData>()
 
@@ -42,10 +57,4 @@ class ImageListAdapter(
     }
 
     override fun getItemCount() = imageList.size
-
-    fun notifyData(list: List<ImageData>) {
-        imageList.clear()
-        imageList.addAll(list)
-        notifyDataSetChanged()
-    }
 }

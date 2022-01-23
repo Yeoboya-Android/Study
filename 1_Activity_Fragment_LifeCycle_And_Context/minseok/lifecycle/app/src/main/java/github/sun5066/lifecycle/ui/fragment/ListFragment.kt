@@ -17,6 +17,8 @@ import github.sun5066.lifecycle.ui.state.LastViewState
 import github.sun5066.lifecycle.ui.state.LifeCycleModeState
 import github.sun5066.lifecycle.viewmodel.ListViewModel
 import github.sun5066.lifecycle.viewmodel.MainViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class ListFragment : BaseFragment<FragmentListBinding>() {
 
@@ -44,7 +46,11 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
         }
     }
 
-    override fun fetchData() = Unit
+    override fun fetchData() {
+        listViewModel.imageList.onEach { imageList ->
+            imageListAdapter.submit(imageList)
+        }.launchIn(lifecycleScope)
+    }
 
     override fun onResume() {
         super.onResume()
@@ -57,7 +63,7 @@ class ListFragment : BaseFragment<FragmentListBinding>() {
     }
 
     private fun makeAdapter() =
-        ImageListAdapter(requireContext(), lifecycleScope, listViewModel.imageData) { selectImage ->
+        ImageListAdapter(requireContext()) { selectImage ->
             when (mainViewModel.lifeCycleState.value) {
                 LifeCycleModeState.Default, LifeCycleModeState.BackStack -> {
                     (requireActivity() as MainActivity).showDetailFragment(selectImage)

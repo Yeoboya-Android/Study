@@ -12,8 +12,8 @@ class ListViewModel(
     app: Application
 ) : BaseViewModel(app) {
 
-    private val _imageData = MutableStateFlow<ImageData?>(null)
-    val imageData = _imageData.asStateFlow()
+    private val _imageList = MutableStateFlow(listOf<ImageData>())
+    val imageList = _imageList.asStateFlow()
 
     init {
         setImageList()
@@ -23,9 +23,10 @@ class ListViewModel(
         GetImageDataUseCase(applicationContext).invoke()
             .flowOn(Dispatchers.IO)
             .onEach {
-                delay(30)
-                _imageData.value = it
-            }
-            .launchIn(viewModelScope)
+                delay(1)
+                val list = _imageList.value.toMutableList()
+                list.add(it)
+                _imageList.value = list
+            }.launchIn(viewModelScope)
     }
 }

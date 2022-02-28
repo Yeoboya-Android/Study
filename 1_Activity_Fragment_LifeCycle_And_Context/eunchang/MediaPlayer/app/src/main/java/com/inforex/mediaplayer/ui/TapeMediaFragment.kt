@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,20 +20,14 @@ import com.inforex.mediaplayer.ui.base.MediaApiInterface
 import com.inforex.mediaplayer.util.DataBindingViewHolder
 import com.inforex.mediaplayer.util.ImageUtil
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONArray
 import org.json.JSONObject
-import retrofit2.Call
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -61,21 +54,6 @@ class TapeMediaFragment : BaseFragment<FragmentTapeMediaBinding, MainViewModel>(
         backPressedCallback.remove()
     }
 
-    private fun getList() = lifecycleScope.launch(Dispatchers.IO) {
-        mMediaApiInterface?.let {
-            requestAsync({ it.getTapeList(getRequestBody()) }).collect {
-                if (it.code == "00000") requireActivity().runOnUiThread { setAdapter(it.data) }
-            }
-        }
-    }
-
-    private fun setAdapter(list: ArrayList<MediaInfoData>) {
-        mBinding?.recyclerViewMediaList?.run {
-            adapter = MediaListAdapter(list)
-            layoutManager = LinearLayoutManager(requireContext())
-        }
-    }
-
     private val baseUrl = "https://liveapi.club5678.com"
     private var mMediaApiInterface: MediaApiInterface? = null
     private fun setApiInterface() {
@@ -94,13 +72,31 @@ class TapeMediaFragment : BaseFragment<FragmentTapeMediaBinding, MainViewModel>(
             .create(MediaApiInterface::class.java)
     }
 
+    private fun getList() = lifecycleScope.launch(Dispatchers.IO) {
+        mMediaApiInterface?.let {
+            /*val list = requestData1({ it.getTapeList(getRequestBody()) })
+            launch(Dispatchers.Main) { setAdapter(list) }*/
+
+            requestData2({ it.getTapeList(getRequestBody()) }).collect {
+                if (it.code == "00000") launch(Dispatchers.Main) { setAdapter(it.data) }
+            }
+        }
+    }
+
+    private fun setAdapter(list: ArrayList<MediaInfoData>) {
+        mBinding?.recyclerViewMediaList?.run {
+            adapter = MediaListAdapter(list)
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
     private fun getRequestBody(): RequestBody {
         val filterJson = JSONObject().apply {
             put("searchSlct", "a")
             put("tapeClssCode", "")
             put("memNo", 0)
             put("memSex", "")
-            put("updDate", "2022-1-13 17:29:15")
+            put("updDate", "2022-2-28 10:00:00")
             put("pageNo", 1)
             put("pagePerCnt", 100)
         }
@@ -119,7 +115,13 @@ class TapeMediaFragment : BaseFragment<FragmentTapeMediaBinding, MainViewModel>(
         return RequestBody.create(MediaType.parse("application/json"), bodyJson.toString())
     }
 
-    private suspend fun requestAsync(requestApi: suspend () -> BaseData<DataList<MediaInfoData>>, onError: ((Throwable) -> Unit)? = null) = flow {
+
+    private suspend fun requestData1(requestApi: suspend () -> BaseData<DataList<MediaInfoData>>): ArrayList<MediaInfoData> {
+        return requestApi.invoke().data
+    }
+
+
+    private suspend fun requestData2(requestApi: suspend () -> BaseData<DataList<MediaInfoData>>, onError: ((Throwable) -> Unit)? = null) = flow {
         emit(requestApi())
     }
         .flowOn(Dispatchers.IO)

@@ -7,10 +7,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.inforex.mediaplayer.R
+import com.inforex.mediaplayer.ui.FloatingMediaFragment
+import com.inforex.mediaplayer.ui.LocalMediaFragment
+import com.inforex.mediaplayer.ui.TapeMediaFragment
 import com.inforex.mediaplayer.util.ActivityUtil
 
 
-abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
+abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), BaseNavigator {
 
     lateinit var mBinding: DB
 
@@ -29,6 +32,29 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
         initDataBinding()
         initView()
     }
+
+    override fun gotoLocalMediaListFragment(showFragment: Boolean) {
+        if (showFragment)
+            findOrCreateFragment(LocalMediaFragment::class.java, Bundle(), R.id.container_contents_fragment)
+        else
+            removeFragmentById(intArrayOf(R.id.container_contents_fragment))
+    }
+
+    override fun gotoTapeMediaListFragment(showFragment: Boolean) {
+        if (showFragment)
+            findOrCreateFragment(TapeMediaFragment::class.java, Bundle(), R.id.container_contents_fragment)
+        else
+            removeFragmentById(intArrayOf(R.id.container_contents_fragment))
+    }
+
+    override fun showFloatingFragment(showFragment: Boolean) {
+        if (showFragment)
+            findOrCreateFragment(FloatingMediaFragment::class.java, Bundle(), R.id.container_floating_fragment)
+        else
+            removeFragmentById(intArrayOf(R.id.container_floating_fragment))
+
+    }
+
 
     @Suppress("UNCHECKED_CAST")
     protected fun <T : Fragment> findOrCreateFragment(type: Class<T>, args: Bundle? = null, frameResId: Int, addBackStack: Boolean = true): T? {

@@ -7,6 +7,7 @@ import com.inforex.mediaplayer.R
 import com.inforex.mediaplayer.databinding.FragmentFloatingMediaBinding
 import com.inforex.mediaplayer.databinding.FragmentMenuBinding
 import com.inforex.mediaplayer.ui.base.BaseFragment
+import com.inforex.mediaplayer.ui.base.BaseNavigator
 
 class MenuFragment : BaseFragment<FragmentMenuBinding, MainViewModel>() {
 
@@ -31,6 +32,7 @@ class MenuFragment : BaseFragment<FragmentMenuBinding, MainViewModel>() {
     private val backPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             Log.i("qwe123", "MenuFragment.handleOnBackPressed():::")
+            (activity as BaseNavigator).closeApp()
         }
     }
 

@@ -59,7 +59,15 @@ class LocalMediaFragment : BaseFragment<FragmentLocalMediaBinding, MainViewModel
                 val duration = it.getLong(it.getColumnIndex(MediaStore.Audio.Media.DURATION))
                 val path = it.getString(it.getColumnIndex(MediaStore.Audio.Media.DATA))
 
-                list.add(MediaInfoData(thumbnail, title, artist, duration, path))
+                val mediaInfoData = MediaInfoData(
+                    thumbnailUri = thumbnail,
+                    title = title,
+                    artistName = artist,
+                    duration = duration,
+                    path = path
+                )
+
+                list.add(mediaInfoData)
             } while (it.moveToNext())
         }
 

@@ -26,41 +26,77 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                imageURL="@{vm.curThumbnailImagePath}"
+                imageFile="@{vm.curThumbnailImage}"
                 defaultResId="@{vm.defaultImageResId}"
                 tools:src="@drawable/example_thumbnail"/>
 
-            <TextView
-                android:id="@+id/play_title"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@{vm.curTitle}"
-                app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/play_artist"
-                app:layout_constraintLeft_toRightOf="@id/play_thumbnail"
-                app:layout_constraintRight_toLeftOf="@id/btn_close"
-                tools:text="title"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/play_artist"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@{vm.curArtist}"
-                app:layout_constraintTop_toBottomOf="@id/play_title"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="@id/play_title"
-                app:layout_constraintRight_toLeftOf="@id/btn_close"
-                android:singleLine="true"
-                android:ellipsize="end"
-                tools:text="artist"
-                android:textSize="@dimen/small_text_size"
-                android:textColor="@color/white" />
+                app:layout_constraintEnd_toStartOf="@id/btn_prev_1"
+                app:layout_constraintStart_toEndOf="@id/play_thumbnail">
+
+                <TextView
+                    android:id="@+id/play_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.curTitle}"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/play_artist"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="title"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/play_artist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@{vm.curArtist}"
+                    app:layout_constraintTop_toBottomOf="@id/play_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    tools:text="artist"
+                    android:textSize="@dimen/small_text_size"
+                    android:textColor="@color/white" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <ImageButton
+                android:id="@+id/btn_prev_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:background="@color/color_none"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_next_1"
+                android:src="@drawable/ico_prev_1"
+                onClickListener="@{vm.clickListener}"/>
+
+
+            <ImageButton
+                android:id="@+id/btn_next_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:background="@color/color_none"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_close"
+                android:src="@drawable/ico_next_1"
+                onClickListener="@{vm.clickListener}"/>
+
 
             <ImageButton
                 android:id="@+id/btn_close"

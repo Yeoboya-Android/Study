@@ -2,6 +2,7 @@ package com.inforex.mediaplayer.ui
 
 import android.Manifest
 import android.os.Bundle
+import android.os.Process
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.LayoutRes
@@ -12,12 +13,10 @@ import com.inforex.mediaplayer.ui.base.BaseNavigator
 
 
 /** todo
- * Api로 playList 받아오기
  * Service 작업
- * Coroutine 작업
  * */
 
-class MainActivity : BaseActivity<ActivityMainBinding>(), BaseNavigator {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private val mViewModel: MainViewModel by viewModels()
 
@@ -47,23 +46,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), BaseNavigator {
         mViewModel.setButtonEnable(isEnable)
     }
 
-    override fun gotoLocalMediaListFragment(showFragment: Boolean) {
-        if (showFragment)
-            findOrCreateFragment(LocalMediaFragment::class.java, Bundle(), R.id.container_contents_fragment)
-        else
-            removeFragmentById(intArrayOf(R.id.container_contents_fragment))
+
+    override fun closeApp() {
+        mViewModel.stopMediaPlayer() // todo MediaPlayerManager 구현하고 BaseActivity로 빼기
+        moveTaskToBack(true)
+        finish()
+        Process.killProcess(Process.myPid())
     }
-
-    override fun gotoTapeMediaListFragment(showFragment: Boolean) {
-
-    }
-
-    override fun showFloatingFragment(showFragment: Boolean) {
-        if (showFragment)
-            findOrCreateFragment(FloatingMediaFragment::class.java, Bundle(), R.id.container_floating_fragment)
-        else
-            removeFragmentById(intArrayOf(R.id.container_floating_fragment))
-
-    }
-
 }

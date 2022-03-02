@@ -28,7 +28,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         detailViewModel.setImageData(imageData)
     }
 
-    override fun fetchObservables() {
+    override fun fetchData() {
         detailViewModel.imageData.observe(viewLifecycleOwner) { imageData ->
             Glide
                 .with(requireContext())

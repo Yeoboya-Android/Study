@@ -4,18 +4,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import github.sun5066.data.model.ImageData
 import github.sun5066.lifecycle.R
 import github.sun5066.lifecycle.databinding.ItemImageListBinding
+import github.sun5066.lifecycle.extension.centerCrop
 
 class BindingViewHolder(val binding: ItemImageListBinding) : RecyclerView.ViewHolder(binding.root)
 
 class ImageListAdapter(
     private val context: Context,
-    private val onClick: (ImageData) -> Unit
-) :
-    RecyclerView.Adapter<BindingViewHolder>() {
+    private val onClick: (ImageData) -> Unit,
+) : RecyclerView.Adapter<BindingViewHolder>() {
 
     private val imageList = arrayListOf<ImageData>()
 
@@ -24,28 +23,26 @@ class ImageListAdapter(
             ItemImageListBinding.inflate(LayoutInflater.from(context))
         )
 
-    override fun onBindViewHolder(holder: BindingViewHolder, position: Int) {
-        val imageData = imageList[position]
-        val imageView = holder.binding.imageView
-
-        Glide
-            .with(context)
-            .load(imageData.uri)
-            .centerCrop()
-            .placeholder(R.drawable.ic_launcher_foreground)
-            .error(R.drawable.ic_launcher_foreground)
-            .into(imageView)
-
-        imageView.setOnClickListener {
-            onClick.invoke(imageData)
+    override fun onBindViewHolder(holder: BindingViewHolder, position: Int) =
+        with(holder.binding.imageView) {
+            val imageData = imageList[position]
+            centerCrop(
+                imageData.uri,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_background
+            )
+            setOnClickListener {
+                onClick.invoke(imageData)
+            }
         }
-    }
 
     override fun getItemCount() = imageList.size
 
-    fun notifyData(list: List<ImageData>) {
-        imageList.clear()
-        imageList.addAll(list)
-        notifyDataSetChanged()
+    fun submit(list: List<ImageData>) {
+        val position = itemCount
+        (position until list.size).forEach { i ->
+            imageList.add(list[i])
+            notifyItemInserted(i)
+        }
     }
 }

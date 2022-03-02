@@ -4,4 +4,5 @@ interface BaseNavigator {
     fun gotoLocalMediaListFragment(showFragment: Boolean)
     fun gotoTapeMediaListFragment(showFragment: Boolean)
     fun showFloatingFragment(showFragment: Boolean)
+    fun closeApp()
 }

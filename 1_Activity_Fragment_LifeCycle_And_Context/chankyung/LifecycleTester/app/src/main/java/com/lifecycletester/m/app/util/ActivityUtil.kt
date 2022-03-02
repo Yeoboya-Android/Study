@@ -3,6 +3,7 @@ package com.lifecycletester.m.app.util
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -47,6 +48,12 @@ object ActivityUtil {
                 _fragmentManager.beginTransaction().replace(_frameId, _fragment).addToBackStack(null)
                     .commit()
             }
+
+    fun fragmentChangeListener(_fragmentManager: FragmentManager){
+        _fragmentManager.addOnBackStackChangedListener {
+            Log.i("frag", "change")
+        }
+    }
 
     /**
      * isAppRunning을 사용하면 앱이 죽어있을때도, 항상 true 를 반환하게되어

@@ -53,13 +53,13 @@
                             }
         ``````
   
-        ![Alt text](./images/Flow/FlatMapConcat_result1.png)
+![Alt text](./images/Flow/FlatMapConcat_result1.png)
   
         - 10ms마다 발행된 값을 각각 1000, 2000, 3000씩 더해서 다시 발행했다.
   
     * flatMapLastest를 사용하여 최신 데이터만 flow 변환.
     
-        ![Alt text](./images/Flow/FlatMapConcat1.png)
+![Alt text](./images/Flow/FlatMapConcat1.png)
     
         - flatMapConcat은 원 flow에서 발행된 데이터가 순차적으로 처리되어 새로운 flow를 만들어낸다.
           이 말은 데이터 처리하는데 오래 걸리는 연산이 변환 값으로 들어올 경우 데이터가 처리되는데 오래 걸릴 것이다. collect와 비슷한 단점이 있다.
@@ -88,7 +88,7 @@
   
     * collect
     
-    ![Alt text](./images/Flow/Collect1.png)
+![Alt text](./images/Flow/Collect1.png)
     
         - 현재 들어온 데이터를 즉시 소비한다.
           하지만 소비하는데 시간이 걸린다면 새로운 데이터가 발행되었을때 처리도 그만큼 늦어진다.
@@ -117,51 +117,51 @@
                     }
         ``````
     
-        ![Alt text](./images/Flow/Collect_result1.png)
+![Alt text](./images/Flow/Collect_result1.png)
         
         - 발행은 10ms로 하는데 소비는 1000ms로 한다. 따라서 1초에 한번씩 실행하게 된다.
 
-* collectLatest
+    * collectLatest
 
 ![Alt text](./images/Flow/CollectLatest1.png)
 
-    - collect의 문제점을 해결하면서 소비한다.
-    - 최신 데이터가 들어왔을 때 이전 데이터를 이용해 수행하던 suspend fun을 취소하고 새로 들어온 데이터로 suspend fun을 수행하도록 만드는 것이다.
+        - collect의 문제점을 해결하면서 소비한다.
+        - 최신 데이터가 들어왔을 때 이전 데이터를 이용해 수행하던 suspend fun을 취소하고 새로 들어온 데이터로 suspend fun을 수행하도록 만드는 것이다.
+      
+        ``````
+        viewModelScope.launch {
+                                startStopWatch().collectLatest {_time->
+                                    obsTime.value = _time
+                                    Log.i("aaaa", _time.toString())
+                                    delay(1000)
+                                }
+                            }
+        ``````
   
-      ``````
-      viewModelScope.launch {
-                              startStopWatch().collectLatest {_time->
-                                  obsTime.value = _time
-                                  Log.i("aaaa", _time.toString())
-                                  delay(1000)
-                              }
-                          }
-      ``````
-  
-    ![Alt text](./images/Flow/CollectLatest_result1.png)
+![Alt text](./images/Flow/CollectLatest_result1.png)
     
-    - 중간에 suspend fun을 취소하기 때문에 정상적으로 소비를 한다.
+        - 중간에 suspend fun을 취소하기 때문에 정상적으로 소비를 한다.
   
-    ![Alt text](./images/Flow/CollectLatest2.png)
+![Alt text](./images/Flow/CollectLatest2.png)
     
-    - collectLatest의 문제점은 데이터 발행 시간 사이의 간격보다 데이터를 처리하는 suspend fun이 수행하는 시간이 오래 걸릴 경우,
-      새로 들어온 데이터가 있다면 현재 작업이 계속해서 취소되게 된다.
-      즉 이런 상황에서 collectLatest를 쓸 경우 중간 데이터를 하나도 얻지 못하고 마지막 데이터만을 얻을 수 있다.
-        
-    ``````
-    viewModelScope.launch {
-                        startStopWatch().collectLatest {_time->
-                            delay(1000)
-                            obsTime.value = _time
-                            Log.i("aaaa", _time.toString())
+        - collectLatest의 문제점은 데이터 발행 시간 사이의 간격보다 데이터를 처리하는 suspend fun이 수행하는 시간이 오래 걸릴 경우,
+          새로 들어온 데이터가 있다면 현재 작업이 계속해서 취소되게 된다.
+          즉 이런 상황에서 collectLatest를 쓸 경우 중간 데이터를 하나도 얻지 못하고 마지막 데이터만을 얻을 수 있다.
+            
+        ``````
+        viewModelScope.launch {
+                            startStopWatch().collectLatest {_time->
+                                delay(1000)
+                                obsTime.value = _time
+                                Log.i("aaaa", _time.toString())
+                            }
                         }
-                    }
-    ``````       
+        ``````       
     
-    ![Alt text](./images/Flow/CollectLatest_result2.png)
+![Alt text](./images/Flow/CollectLatest_result2.png)
     
-    - 소비를 하였으나 1000ms 지연(delay)을 하고 데이터를 처리 하였다.
-      하지만 delay시점에 suspend fun취소가 일어나서 아무런 처리도 못하게 된다.
+        - 소비를 하였으나 1000ms 지연(delay)을 하고 데이터를 처리 하였다.
+          하지만 delay시점에 suspend fun취소가 일어나서 아무런 처리도 못하게 된다.
 
     * conflate를 사용한 최신 데이터 collect
         - 앞서 collectLatest를 사용할 경우 데이터 발행 시간 사이의 간격보다 데이터를 처리하는 suspend fun이 수행하는 시간이 오래 걸릴 경우,
@@ -184,19 +184,19 @@
                         }
         ``````
     
-    ![Alt text](./images/Flow/Conflate_result1.png)
+![Alt text](./images/Flow/Conflate_result1.png)
     
-    - 발행은 계속 되지만 처음 소비는 740ms에서 소비되었다.
+        - 발행은 계속 되지만 처음 소비는 740ms에서 소비되었다.
     
     * buffer을 사용한 데이터 소비의 최적화.
     
-    ![Alt text](./images/Flow/Collect2.png)
+![Alt text](./images/Flow/Collect2.png)
     
         - collect를 사용하면 하나의 Coroutine에서 발행과 소비가 같이 일어나기 때문에 데이터가 발행된 후 소비가 끝나고 나서 다시 다음 데이터가 발행된다. 즉 발행과 소비가 순차적으로 일어난다.
         - 이 방법은 발행하는 쪽이나 소비하는 쪽의 delay를 미리 처리하지 않는다면 발행쪽과 소비쪽 모두 delay가 생기기 때문에 비효율 적이다.
         - 이부분을 해결하는 방법은 buffer을 사용하여 발행부분의 Coroutine과 소비부분의 Coroutine을 분리하는 것이다.
   
-    ![Alt text](./images/Flow/Buffer1.png)
+![Alt text](./images/Flow/Buffer1.png)
 
         - 발행쪽에서 발행(emit)은 별도의 Coroutine에서 수행되므로 계속해서 일어나고, 소비가 끝나는대로 바로바로 다음 데이터가 소비하게 하는것이다.
           이를 통해 발행에 생기는 지연을 방지할 수 있다.
@@ -215,7 +215,7 @@
                         }
         ``````
     
-        ![Alt text](./images/Flow/Buffer_result1.png)
+![Alt text](./images/Flow/Buffer_result1.png)
   
         - 발행은 발행대로 Corutine이 작동되고, 소비는 소비대로 Corutine작동한다.
           하지만 버퍼의 크기가 무한대인것은 아닌듯하다.

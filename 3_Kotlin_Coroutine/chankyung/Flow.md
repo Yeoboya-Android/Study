@@ -17,6 +17,7 @@
     - Consumer : 데이터를 소비한다. ui에 데이터를 그려준다.
    
 * [Producer]
+
 ![Alt text](./images/Flow/Producer1.png)
 
     - Producer은 로컬DB또는 Restfull Api를 통해서 필요한 데이터를 얻어와서 발행한다.
@@ -27,6 +28,19 @@
         - flow간에 연결이 필요할 경우 flatMapConcat을 이용해 연결을 하면 된다.
   
         ``````
+        val TIMER_INTERVAL = 10L
+              
+        private fun startStopWatch() : Flow<Long>{
+            return flow{
+                var count = 0L
+                while(true){
+                    delay(TIMER_INTERVAL)
+                    count += TIMER_INTERVAL
+                    emit(count)
+                }
+            }
+        }
+      
         startStopWatch().flatMapConcat { _value->
                                 flow{
                                     emit(_value + 1000)
@@ -81,26 +95,26 @@
           하나의 코루틴 안에서 실행되기 때문에 그렇다.
         
         ``````
-            val TIMER_INTERVAL = 10L
+        val TIMER_INTERVAL = 10L
         
-            private fun startStopWatch() : Flow<Long>{
-                return flow{
-                    var count = 0L
-                    while(true){
-                        delay(TIMER_INTERVAL)
-                        count += TIMER_INTERVAL
-                        emit(count)
-                    }
+        private fun startStopWatch() : Flow<Long>{
+            return flow{
+                var count = 0L
+                while(true){
+                    delay(TIMER_INTERVAL)
+                    count += TIMER_INTERVAL
+                    emit(count)
                 }
             }
+        }
         
-            viewModelScope.launch {
-                            startStopWatch().collect {_time->
-                                obsTime.value = _time
-                                Log.i("aaaa", _time.toString())
-                                delay(1000)
-                            }
+        viewModelScope.launch {
+                        startStopWatch().collect {_time->
+                            obsTime.value = _time
+                            Log.i("aaaa", _time.toString())
+                            delay(1000)
                         }
+                    }
         ``````
     
         ![Alt text](./images/Flow/Collect_result1.png)

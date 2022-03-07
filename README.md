@@ -11,8 +11,8 @@
 
 - 🔴 View(Activity/Fragment)의 생명주기 및 context와 applicationContext
 - 🔴 Thread와 안드로이드의 Handler에 대해서
-- 🟢 Kotlin Coroutine
-- ⚪ 안드로이드 서비스 컴포넌트
+- 🔴 Kotlin Coroutine
+- 🟢 안드로이드 서비스 컴포넌트
   
 
 <details>

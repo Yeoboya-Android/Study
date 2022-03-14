@@ -165,8 +165,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 먼저 IPC와 RPC에 대해 알아야하며, 리눅스의 IPC(Inter Process Communication) 기술에 RPC(Remote Procedure Call) 메커니즘이 적용된 바인더 프레임워크이다.
 
-이는 사진에 나와있듯이 리눅스 커널 위에서 라이브러리 레벨에서 돌아간다.
-
 ![preview](preview/android_linux.png)
 
 `클라이언트 프로세스 -> 커널의 공유 메모리(바인더 프레임워크) -> 서버 프로세스` 순서로 실행되며, 

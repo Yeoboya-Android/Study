@@ -192,3 +192,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 이제 바인더 순서에 `AIDL`까지 더해서 밑에 사진을 참고할것.
 
 ![preview](preview/aidl.png)
+
+# 참조문헌 References
+
+- [네이버 D2 개발 블로그](https://d2.naver.com/helloworld/47656)
+- [전문가를 위한 안드로이드 프로그래밍](http://www.yes24.com/Product/Goods/13433805)
+- [KIMSS Blog](https://kimss1502.github.io/android/about_ipc_rpc_binder)

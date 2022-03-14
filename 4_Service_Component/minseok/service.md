@@ -160,3 +160,35 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 `startService()`, `startForegroundService()`로 실행된 서비스에 `bind/unbind`로 해당 서비스에 바인딩 처리가 가능하다.
 이러한 방식으로 서비스를 사용할 경우 `unbind` 시에도 서비스가 소멸되지 않으니, 서비스의 종료 시점을 확실히 가져야한다.(`stopSelf()`, `stopService()`)
+
+## Binder?, IPC?, RPC?, AIDL?
+
+먼저 IPC와 RPC에 대해 알아야하며, 리눅스의 IPC(Inter Process Communication) 기술에 RPC(Remote Procedure Call) 메커니즘이 적용된 바인더 프레임워크이다.
+
+이는 사진에 나와있듯이 리눅스 커널 위에서 라이브러리 레벨에서 돌아간다.
+
+![preview](preview/android_linux.png)
+
+`클라이언트 프로세스 -> 커널의 공유 메모리(바인더 프레임워크) -> 서버 프로세스` 순서로 실행되며, 
+프로세스와 커널이 통신(RPC)하는 과정을 `트랜잭션`이라 부른다.
+
+![preview](preview/binder.png)
+
+> Android의 모든 컴포넌트는 서버 프로세스 형태로 제공되기 때문에 프로세스 사이에 최적화된 통신 방법이 필요하고 그 고민 결과가 바인더 이다. 바인더는 모든 프로세스가 공유하는 커널 메모리를 참조하게 함으로써 메모리 복사 오버헤드를 최소화한다. 뿐만 아니라 C++을 이용해 작성된 RPC(Remote Procedure Call) 프레임워크를 제공하여 생산성이 높다. 라고 "네이버 D2 기술 블로그"에 명시되어있다.
+
+보았듯이 바인더를 사용하면 클라이언트 프로세스(현재 앱)에서 서버 프로세스(시스템 서비스)의 원격 메서드를 간편하게 호출할 수 있다.
+
+## AIDL(Android Interface Definition Language)
+
+안드로이드는 바인더를 간편하게 생성하기 위해 인터페이스 정의 언어인 `AIDL`를 제공해주는데, 이 언어로 인터페이스를 작성하면 자동으로 바인더를 생성해준다.
+
+> `AIDL`은 `Java Programing` 형식으로 작성해야하며, 바인더 또한 자바 코드로 생성된다.
+
+클라이언트 프로세스에서 `AIDL`를 작성하면 `inner class`로 `Stub`, `Proxy` 가 생성된다.
+
+- Proxy : 클라이언트에서 실행되는 코드로 호출하려는 함수를 직렬화(마샬링)하여 요청한다.
+- Stub : 서버에서 실행되는 코드로 제공하는 함수를 역직렬화(언마샬링)하여 호출한다.
+
+이제 바인더 순서에 `AIDL`까지 더해서 밑에 사진을 참고할것.
+
+![preview](preview/aidl.png)

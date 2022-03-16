@@ -9,14 +9,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.inforex.mediaplayer.R
 
 
 object ImageUtil {
 
-    /** Glide RequestBuilder 생성
-     * @author hsji
-     * @since 20.05.14 */
+
     // RequestBuilder<Drawable>
     private fun getRequestDrawableBuilder(context: Context, url: Any, diskCacheFlag: DiskCacheStrategy = DiskCacheStrategy.RESOURCE) =
         Glide.with(context).load(url).apply(RequestOptions()).diskCacheStrategy(diskCacheFlag)

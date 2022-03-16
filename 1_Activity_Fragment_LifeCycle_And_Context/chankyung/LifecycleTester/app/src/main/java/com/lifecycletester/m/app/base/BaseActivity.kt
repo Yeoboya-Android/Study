@@ -150,13 +150,15 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), BaseNav
     }
 
     override fun onBackPressed() {
-        mBackPressedListener?.let{
+        /*mBackPressedListener?.let{
             it.onBackPressed()
 
             if(it.onSuperBackPressed) super.onBackPressed()
         } ?: run{
             super.onBackPressed()
-        }
+        }*/
+
+        super.onBackPressed()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

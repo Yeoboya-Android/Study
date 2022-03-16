@@ -11,24 +11,8 @@
 
 - 🔴 View(Activity/Fragment)의 생명주기 및 context와 applicationContext
 - 🔴 Thread와 안드로이드의 Handler에 대해서
-- 🟢 Kotlin Coroutine
-- ⚪ 안드로이드 프로세스와 태스크
-- ⚪ 안드로이드 서비스 컴포넌트
-
-## 🤝 현재 팀 목록
-- A조
-  - [오혜미](https://github.com/HyemiOh/Study)
-  - [김민영](https://github.com/MYKIM95/Study)
-  - [김동현](https://github.com/net772/Study)
-- B조
-  - [김은창](https://github.com/eunchang233/Study)
-  - [남현웅](https://github.com/Namhyunwoong/Study)
-  - [김아름](https://github.com/ann1909/Study)
-- C조
-  - [박찬경](https://github.com/userlife/Study)
-  - [양수향](https://github.com/ysgy1121/Study-1)
-  - [김민석](https://github.com/sun5066/Study-1)
-  - [이아현](https://github.com/Ahhyeon-Lee/Study)
+- 🔴 Kotlin Coroutine
+- 🟢 안드로이드 서비스 컴포넌트
   
 
 <details>
@@ -49,6 +33,27 @@
   - [김민석](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/minseok)
   - [남현웅](https://github.com/Yeoboya-Android-Study/Study/tree/main/1_Activity_Fragment_LifeCycle_And_Context/hyunwoong)
 
+</div>
+</details>
+
+
+<details>
+<summary>2번째 주제 팀</summary>
+<div markdown="1">
+  
+- A조
+  - [오혜미](https://github.com/HyemiOh/Study)
+  - [김민영](https://github.com/MYKIM95/Study)
+  - [김동현](https://github.com/net772/Study)
+- B조
+  - [김은창](https://github.com/eunchang233/Study)
+  - [남현웅](https://github.com/Namhyunwoong/Study)
+  - [김아름](https://github.com/ann1909/Study)
+- C조
+  - [박찬경](https://github.com/userlife/Study)
+  - [양수향](https://github.com/ysgy1121/Study-1)
+  - [김민석](https://github.com/sun5066/Study-1)
+  - [이아현](https://github.com/Ahhyeon-Lee/Study)
 
 </div>
 </details>

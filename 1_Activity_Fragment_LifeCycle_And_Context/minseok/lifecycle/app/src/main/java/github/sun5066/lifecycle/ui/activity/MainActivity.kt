@@ -1,25 +1,44 @@
 package github.sun5066.lifecycle.ui.activity
 
 import android.Manifest
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
 import github.sun5066.data.model.ImageData
 import github.sun5066.lifecycle.R
+import github.sun5066.lifecycle.TestService
 import github.sun5066.lifecycle.databinding.ActivityMainBinding
 import github.sun5066.lifecycle.ui.fragment.DetailFragment
 import github.sun5066.lifecycle.ui.fragment.ListFragment
 import github.sun5066.lifecycle.ui.state.LastViewState
 import github.sun5066.lifecycle.ui.state.LifeCycleModeState
 import github.sun5066.lifecycle.viewmodel.MainViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private val mainViewModel by viewModels<MainViewModel>()
+    private var testServiceBinder: TestService.LocalBinder? = null
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            testServiceBinder = service as TestService.LocalBinder
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            testServiceBinder = null
+        }
+    }
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -42,6 +61,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 showListFragment()
             }
         }
+
+        binding.btn.setOnClickListener {
+            testServiceBinder?.service?.count()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val intent = Intent(this, TestService::class.java)
+        bindService(intent, serviceConnection, BIND_AUTO_CREATE)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unbindService(serviceConnection)
     }
 
     private fun showListFragment() {
